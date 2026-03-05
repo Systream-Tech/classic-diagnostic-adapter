@@ -9,7 +9,7 @@
 # https://www.apache.org/licenses/LICENSE-2.0
 
 [database]
-path = "."
+path = "/home/systream/Downloads/New_allfiles/cda check/mdd"
 
 [doip]
 tester_address = "127.0.0.1"
