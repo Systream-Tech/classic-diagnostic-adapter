@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,17 +7,17 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 use std::{sync::Arc, time::Duration};
 
 use cda_interfaces::{
-    DataParseError, DiagServiceError, DoipComParamProvider, EcuAddressProvider, HashMap,
-    HashMapExtensions, dlt_ctx, service_ids,
+    DoipComParamProvider, EcuAddressProvider, HashMap, HashMapExtensions, dlt_ctx, service_ids,
 };
 use doip_definitions::payload::{
-    ActivationType, AliveCheckRequest, DiagnosticAckCode, DiagnosticMessageAck, DoipPayload,
-    RoutingActivationRequest,
+    ActivationType, AliveCheckRequest, DiagnosticMessage, DoipPayload, RoutingActivationRequest,
 };
 use thiserror::Error;
 use tokio::sync::{Mutex, RwLock, broadcast, mpsc, watch};
@@ -27,10 +26,7 @@ use crate::{
     ConnectionError, DiagnosticResponse, DoipConnection, DoipEcu, DoipTarget,
     NRC_BUSY_REPEAT_REQUEST, NRC_RESPONSE_PENDING, NRC_TEMPORARILY_NOT_AVAILABLE, SLEEP_INTERVAL,
     connections::EcuError::EcuConnectionError,
-    ecu_connection::{
-        self, ConnectionConfig, ECUConnectionRead, ECUConnectionSend as _, EcuConnectionTarget,
-    },
-    socket::DoIPConfig,
+    ecu_connection::{self, ECUConnectionRead, ECUConnectionSend as _, EcuConnectionTarget},
 };
 
 type ConnectionResetReason = String;
@@ -58,41 +54,9 @@ impl From<ConnectionError> for EcuError {
     }
 }
 
-impl From<EcuError> for DiagServiceError {
-    fn from(value: EcuError) -> Self {
-        match value {
-            EcuError::ResourceNotFound(res) => DiagServiceError::ResourceError(res),
-            EcuConnectionError(connection_error) => match connection_error {
-                ConnectionError::Decoding(err) => DiagServiceError::DataError(DataParseError {
-                    value: err,
-                    details: String::new(),
-                }),
-                ConnectionError::InvalidMessage(msg) => {
-                    DiagServiceError::UnexpectedResponse(Some(msg))
-                }
-                ConnectionError::Timeout(_) => DiagServiceError::Timeout,
-                // map arbitrary connection errors to connection closed
-                ConnectionError::ConnectionFailed(msg) => {
-                    DiagServiceError::ConnectionClosed(format!("ConnectionFailed {msg}"))
-                }
-                ConnectionError::RoutingError(msg) => {
-                    DiagServiceError::ConnectionClosed(format!("RoutingError {msg}"))
-                }
-                ConnectionError::SendFailed(msg) => {
-                    DiagServiceError::ConnectionClosed(format!("SendFailed {msg}"))
-                }
-                ConnectionError::Closed => DiagServiceError::ConnectionClosed(String::new()),
-            },
-        }
-    }
-}
-
 #[tracing::instrument(
-    skip(doip_connections, ecus, gateway_ecu_map, connection_config),
+    skip(doip_connections, ecus, gateway_ecu_map),
     fields(
-        tester_ip = connection_config.source_ip.clone(),
-        port = connection_config.port,
-        tls_port = connection_config.tls_port,
         gateway_ecu = %gateway.ecu,
         gateway_ip = %gateway.ip,
         logical_address = %format!("{:#06x}", gateway.logical_address),
@@ -100,9 +64,7 @@ impl From<EcuError> for DiagServiceError {
     )
 )]
 pub(crate) async fn handle_gateway_connection<T>(
-    connection_config: &ConnectionConfig,
     gateway: DoipTarget,
-    doip_connection_config: DoIPConfig,
     doip_connections: &Arc<RwLock<Vec<Arc<DoipConnection>>>>,
     ecus: &Arc<HashMap<String, RwLock<T>>>,
     gateway_ecu_map: &HashMap<u16, Vec<u16>>,
@@ -146,10 +108,8 @@ where
     let connection_retry_attempts = gateway_ecu.connection_retry_attempts();
 
     let (sender, receiver) = match connection_handler(
-        connection_config.clone(),
         gateway.ip.clone(),
         gateway.ecu.clone(),
-        doip_connection_config,
         routing_activation_request,
         ecu_ids.clone(),
         ConnectionSettings {
@@ -195,7 +155,7 @@ where
 )]
 fn create_ecu_receiver_map(
     ecus: Vec<u16>,
-    sender: &mpsc::Sender<DoipPayload>, // sender is shared between all ecus of a gateway
+    sender: &mpsc::Sender<DiagnosticMessage>, // sender is shared between all ecus of a gateway
     receiver: &HashMap<u16, broadcast::Receiver<Result<DiagnosticResponse, EcuError>>>,
 ) -> HashMap<u16, Arc<Mutex<DoipEcu>>> {
     let mut doip_ecus: HashMap<u16, Arc<Mutex<DoipEcu>>> = HashMap::new();
@@ -222,11 +182,8 @@ fn create_ecu_receiver_map(
 
 #[allow(clippy::type_complexity)]
 #[tracing::instrument(
-    skip(routing_activation_request, connection_settings, connection_config),
+    skip(routing_activation_request, connection_settings),
     fields(
-        tester_ip = connection_config.source_ip.clone(),
-        port = connection_config.port,
-        tls_port = connection_config.tls_port,
         gateway_ip = %gateway_ip,
         gateway_name = %gateway_name,
         ecu_count = ecus.len(),
@@ -234,22 +191,20 @@ fn create_ecu_receiver_map(
     )
 )]
 async fn connection_handler(
-    connection_config: ConnectionConfig,
     gateway_ip: String,
     gateway_name: String,
-    doip_connection_config: DoIPConfig,
     routing_activation_request: RoutingActivationRequest,
     ecus: Vec<u16>,
     connection_settings: ConnectionSettings,
 ) -> Result<
     (
-        mpsc::Sender<DoipPayload>,
+        mpsc::Sender<DiagnosticMessage>,
         HashMap<u16, broadcast::Receiver<Result<DiagnosticResponse, EcuError>>>,
     ),
     EcuError,
 > {
     // channel to send messages to the gateway / ecus
-    let (intx, inrx) = mpsc::channel::<DoipPayload>(50);
+    let (intx, inrx) = mpsc::channel::<DiagnosticMessage>(50);
 
     // channel to receive messages from the gateway / ecus
     let mut outrx: HashMap<u16, broadcast::Receiver<Result<DiagnosticResponse, EcuError>>> =
@@ -270,18 +225,13 @@ async fn connection_handler(
     // setting up initial gateway connection
     let gateway_conn = Arc::new(
         ecu_connection::establish_ecu_connection(
-            &connection_config,
             &gateway_ip,
             &gateway_name,
-            doip_connection_config,
             routing_activation_request,
             connection_settings.connect_timeout,
             connection_settings.routing_activation,
         )
-        .await
-        .inspect_err(|e| {
-            tracing::error!("Failed to connect to gateway at {gateway_ip}: {e:?}");
-        })?,
+        .await?,
     );
 
     // used by receiver / sender task to reset the connection
@@ -289,9 +239,7 @@ async fn connection_handler(
     // task to handle connection resets and reconnects
     let conn_reset = Arc::<EcuConnectionTarget>::clone(&gateway_conn);
     spawn_connection_reset_task(
-        connection_config.clone(),
         gateway_ip.clone(),
-        doip_connection_config,
         routing_activation_request,
         conn_reset_rx,
         conn_reset,
@@ -301,6 +249,7 @@ async fn connection_handler(
     // communication between send / receiver task to unlock the connection in the receiver task
     // when sender task wants to send something
     let (send_pending_tx, send_pending_rx) = watch::channel::<bool>(false);
+    let send_mtx = Arc::new(Mutex::new(()));
     spawn_gateway_sender_task(
         &gateway_ip,
         inrx,
@@ -308,6 +257,7 @@ async fn connection_handler(
         connection_settings.send_timeout,
         conn_reset_tx.clone(),
         send_pending_tx.clone(),
+        Arc::clone(&send_mtx),
     );
     spawn_gateway_receiver_task(
         gateway_ip.clone(),
@@ -316,7 +266,6 @@ async fn connection_handler(
         Arc::<EcuConnectionTarget>::clone(&gateway_conn),
         send_pending_rx,
         conn_reset_tx,
-        intx.clone(),
     );
 
     // no need to wait until the connection is alive, we will reconnect automatically anyway
@@ -330,9 +279,7 @@ async fn connection_handler(
     )
 )]
 fn spawn_connection_reset_task(
-    connection_config: ConnectionConfig,
     gateway_ip: String,
-    doip_connection_config: DoIPConfig,
     routing_activation_request: RoutingActivationRequest,
     mut conn_reset_rx: mpsc::Receiver<ConnectionResetReason>,
     conn_reset: Arc<EcuConnectionTarget>,
@@ -349,10 +296,8 @@ fn spawn_connection_reset_task(
 
                     'reconnect: loop {
                         let new_connection = ecu_connection::establish_ecu_connection(
-                            &connection_config,
                             &gateway_ip,
                             &conn_reset.gateway_name,
-                            doip_connection_config,
                             routing_activation_request,
                             connection_timeouts.connect_timeout,
                             connection_timeouts.routing_activation,
@@ -412,11 +357,12 @@ fn spawn_connection_reset_task(
 )]
 fn spawn_gateway_sender_task(
     gateway_ip: &str,
-    mut inrx: mpsc::Receiver<DoipPayload>,
+    mut inrx: mpsc::Receiver<DiagnosticMessage>,
     gateway_conn: Arc<EcuConnectionTarget>,
     send_timeout: Duration,
     reset_tx: mpsc::Sender<ConnectionResetReason>,
     send_pending_tx: watch::Sender<bool>,
+    send_mtx: Arc<Mutex<()>>,
 ) {
     cda_interfaces::spawn_named!(&format!("doip-gateway-sender-{gateway_ip}"), async move {
         fn send_pending_status(
@@ -428,7 +374,6 @@ fn spawn_gateway_sender_task(
             })
         }
 
-        let send_mtx = Arc::new(Mutex::new(()));
         loop {
             tokio::select! {
                 Some(msg) = inrx.recv() => {
@@ -445,7 +390,7 @@ fn spawn_gateway_sender_task(
                             let lock_after = start.elapsed();
 
                             match tokio::time::timeout(send_timeout, conn
-                                .send(msg)
+                                .send(DoipPayload::DiagnosticMessage(msg))
                             )
                                 .await
                             {
@@ -543,7 +488,6 @@ fn spawn_gateway_receiver_task(
     gateway_conn: Arc<EcuConnectionTarget>,
     mut send_pending_rx: watch::Receiver<bool>,
     reset_tx: mpsc::Sender<ConnectionResetReason>,
-    send_tx: mpsc::Sender<DoipPayload>,
 ) {
     // note: the handlers are defined here, as rustfmt cannot format the correctly inside the
     // tokio::select! macro block
@@ -602,13 +546,12 @@ fn spawn_gateway_receiver_task(
         gateway_ip: &str,
         outtx: &HashMap<u16, broadcast::Sender<Result<DiagnosticResponse, EcuError>>>,
         reset_tx: &mpsc::Sender<ConnectionResetReason>,
-        ack_tx: &mpsc::Sender<DoipPayload>,
         response: Option<Result<DiagnosticResponse, ConnectionError>>,
     ) {
         match response {
             Some(Ok(response)) => {
                 match response {
-                    DiagnosticResponse::Ack((source_address, _)) => {
+                    DiagnosticResponse::Ack(source_address) => {
                         tracing::debug!(
                             gateway_name = %gateway_name,
                             gateway_ip = %gateway_ip,
@@ -627,28 +570,8 @@ fn spawn_gateway_receiver_task(
                             .map(|router| router.send(Ok(response)));
                     }
                     DiagnosticResponse::Msg(msg) => {
+                        tracing::debug!("DOIP OK - Returning response");
                         let addr = u16::from_be_bytes(msg.source_address);
-                        let target_addr = u16::from_be_bytes(msg.target_address);
-                        // send DoIP DiagnosticMessageAck before returning the message to the caller
-                        let _ = ack_tx
-                            .send(DoipPayload::DiagnosticMessageAck(DiagnosticMessageAck {
-                                source_address: msg.target_address,
-                                target_address: msg.source_address,
-                                ack_code: DiagnosticAckCode::Acknowledged,
-                                previous_message: Vec::new(), // skip optional previous payload
-                            }))
-                            .await
-                            .inspect_err(|e| {
-                                tracing::error!(
-                                    error = ?e,
-                                    gateway_name = %gateway_name,
-                                    gateway_ip = %gateway_ip,
-                                    source_address = %addr,
-                                    target_address = %target_addr,
-                                    "Failed to send DiagnosticMessageAck"
-                                );
-                            });
-                        tracing::debug!("DOIP OK - Returning response from ECU {:04x}", addr);
                         outtx
                             .get(&addr)
                             .map(|router| router.send(Ok(DiagnosticResponse::Msg(msg))));
@@ -736,7 +659,6 @@ fn spawn_gateway_receiver_task(
                             &gateway_ip,
                             &outtx,
                             &reset_tx,
-                            &send_tx,
                             response
                         ).await;
                     }
@@ -753,7 +675,7 @@ async fn send_alive_request(conn: &EcuConnectionTarget) -> Result<(), ()> {
                 return;
             };
             let reader = reader_mtx.get_reader();
-            match try_read(Duration::from_secs(1), reader).await {
+            match try_read(Duration::from_millis(1000), reader).await {
                 Some(Ok(DiagnosticResponse::AliveCheckResponse)) => {
                     tracing::debug!("Alive check OK");
                 }
@@ -817,7 +739,7 @@ async fn try_read(
             Some(Ok(msg)) => match msg.payload {
                 DoipPayload::DiagnosticMessage(msg) => {
                     // handle NRCs
-                    if let Some(&0x7F) = msg.message.first() {
+                    if let Some(&0x7f) = msg.message.first() {
                         let request_sid = msg.message.get(1).copied().unwrap_or(0);
                         let error_code = msg.message.get(2).copied().unwrap_or(0);
 
@@ -850,9 +772,8 @@ async fn try_read(
                 DoipPayload::GenericNack(nack) => Ok(DiagnosticResponse::GenericNack(nack)),
                 DoipPayload::DiagnosticMessageAck(ack) => {
                     tracing::debug!("Received diagnostic message ack");
-                    Ok(DiagnosticResponse::Ack((
-                        u16::from_be_bytes(ack.source_address),
-                        ack.previous_message,
+                    Ok(DiagnosticResponse::Ack(u16::from_be_bytes(
+                        ack.source_address,
                     )))
                 }
                 DoipPayload::AliveCheckResponse(_) => Ok(DiagnosticResponse::AliveCheckResponse),

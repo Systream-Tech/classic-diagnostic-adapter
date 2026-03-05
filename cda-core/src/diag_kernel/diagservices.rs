@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,6 +7,8 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 use cda_database::datatypes::{self, DataType};
@@ -167,15 +168,24 @@ impl DiagServiceResponse for DiagServiceResponseStruct {
             }
         }
 
+        let mapped_data = self.mapped_data.as_ref();
+        tracing::debug!("get_dtcs: mapped_data present={}", mapped_data.is_some());
+        
+        if let Some(md) = &mapped_data {
+            tracing::debug!("get_dtcs: mapped_data keys={:?}", md.data.keys().collect::<Vec<_>>());
+        }
+
         let mut dtcs = Vec::new();
-        for container in self
+        for (key, container) in self
             .mapped_data
             .as_ref()
             .ok_or_else(|| DiagServiceError::BadPayload("No mapped data available".to_owned()))?
             .data
-            .values()
+            .iter()
         {
+            tracing::debug!("get_dtcs: checking container key={}", key);
             if let Some(container_dtcs) = get(container) {
+                tracing::debug!("get_dtcs: found {} DTCs in container {}", container_dtcs.len(), key);
                 dtcs.extend(container_dtcs.into_iter().map(|dtc| {
                     (
                         DtcField {
@@ -193,6 +203,7 @@ impl DiagServiceResponse for DiagServiceResponseStruct {
                 }));
             }
         }
+        tracing::debug!("get_dtcs: returning {} total DTCs", dtcs.len());
         Ok(dtcs)
     }
 }

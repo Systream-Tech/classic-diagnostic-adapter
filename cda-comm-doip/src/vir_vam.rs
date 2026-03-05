@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,6 +7,8 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 use std::{future::Future, sync::Arc, time::Duration};
@@ -19,16 +20,12 @@ use doip_definitions::{
     header::PayloadType,
     payload::{DoipPayload, VehicleIdentificationRequest},
 };
+use doip_sockets::udp::UdpSocket;
 use tokio::sync::{Mutex, RwLock, mpsc};
 
-use crate::{
-    DoipDiagGateway, DoipTarget,
-    connections::handle_gateway_connection,
-    ecu_connection::ConnectionConfig,
-    socket::{DoIPConfig, DoIPUdpSocket},
-};
+use crate::{DoipDiagGateway, DoipTarget, connections::handle_gateway_connection};
 pub(crate) async fn get_vehicle_identification<T, F>(
-    socket: &mut DoIPUdpSocket,
+    socket: &mut UdpSocket,
     netmask: u32,
     gateway_port: u16,
     ecus: &Arc<HashMap<String, RwLock<T>>>,
@@ -53,56 +50,45 @@ where
 
     let mut gateways = Vec::new();
 
-    let vam_timeout = Duration::from_secs(1); // not the actual timeout from the spec ...
-
-    tokio::select! {
-        () = shutdown_signal.clone() => {
-            tracing::info!("Shutdown signal received");
-        },
-        () = tokio::time::sleep(vam_timeout) => {
-            tracing::info!("Finished waiting for VIRs");
-        },
-        () = async { // loop until timeout is exceeded or shutdown signal is received
-                loop {
-                    tracing::info!("Started loop");
-                    match socket.recv().await {
-                        Some(Ok((doip_msg, source_addr))) => {
-                            if let PayloadType::VehicleIdentificationRequest =
-                                doip_msg.header.payload_type {
-                                // skip our own VIR
-                                tracing::info!("Skipping own VIR");
-                                continue;
-                            }
-                            match handle_vam::<T>(ecus, doip_msg, source_addr, netmask).await {
-                                Ok(Some(gateway)) => gateways.push(gateway),
-                                Ok(None) => { /* ignore non-matching VAMs */ }
-                                Err(e) => tracing::error!(error = ?e, "Failed to handle VAM"),
-                            }
+    let vam_timeout = Duration::from_millis(1000); // not the actual timeout from the spec ...
+    loop {
+        tokio::select! {
+            () = shutdown_signal.clone() => {
+                break
+            },
+            res = tokio::time::timeout(vam_timeout, socket.recv()) => {
+                match res {
+                    Ok(Some(Ok((doip_msg, source_addr)))) => {
+                        if let PayloadType::VehicleIdentificationRequest =
+                            doip_msg.header.payload_type {
+                            // skip our own VIR
+                            continue;
                         }
-                        Some(Err(e)) => {
-                            tracing::warn!("Failed to receive VAMs: {e:?}");
-                            break;
-                        },
-                        None => {
-                            tracing::warn!("Incomplete VAM due to connection closure/error");
-                            break;
+                        match handle_vam::<T>(ecus, doip_msg, source_addr, netmask).await {
+                            Ok(Some(gateway)) => gateways.push(gateway),
+                            Ok(None) => { /* ignore non-matching VAMs */ }
+                            Err(e) => tracing::error!(error = ?e, "Failed to handle VAM"),
                         }
                     }
+                    Ok(Some(Err(e))) => return Err(DiagServiceError::UnexpectedResponse(Some(
+                        format!("Failed to receive VAMs: {e:?}"))
+                    )),
+                    Ok(None) => return Err(DiagServiceError::ConnectionClosed),
+                    Err(_) => {
+                        // no VAM received within timeout
+                        break;
+                    }
                 }
-            } => { /* nothing else to do once finished */ }
+            }
+        }
     }
-
     Ok(gateways)
 }
 
-// allowed due to nested functions
-#[allow(clippy::too_many_lines)]
-// allowed as it does not improve readability here to put args in a struct
-#[allow(clippy::too_many_arguments)]
+#[allow(clippy::too_many_lines)] // allowed due to nested functions
 pub(crate) async fn listen_for_vams<T, F>(
-    connection_config: ConnectionConfig,
+    tester_ip: String,
     gateway_port: u16,
-    doip_connection_config: DoIPConfig,
     netmask: u32,
     gateway: DoipDiagGateway<T>,
     variant_detection: mpsc::Sender<Vec<String>>,
@@ -117,23 +103,14 @@ pub(crate) async fn listen_for_vams<T, F>(
         doip_msg: doip_definitions::message::DoipMessage,
         source_addr: std::net::SocketAddr,
         netmask: u32,
-        doip_connection_config: DoIPConfig,
     }
 
-    #[tracing::instrument(
-        skip(
-            gateway,
-            gateway_ecu_map,
-            gateway_ecu_name_map,
-            variant_detection,
-            connection_config
-        ),
+    #[tracing::instrument(skip(gateway, gateway_ecu_map, gateway_ecu_name_map, variant_detection),
         fields(
             dlt_context = dlt_ctx!("DOIP")
         )
     )]
     async fn handle_doip_response<T: EcuAddressProvider + DoipComParamProvider>(
-        connection_config: &ConnectionConfig,
         gateway: &DoipDiagGateway<T>,
         send_timeout: Duration,
         doip_msg_ctx: DoipMessageContext,
@@ -145,7 +122,6 @@ pub(crate) async fn listen_for_vams<T, F>(
             doip_msg,
             source_addr,
             netmask,
-            doip_connection_config,
         } = doip_msg_ctx;
         match handle_vam::<T>(&gateway.ecus, doip_msg, source_addr, netmask).await {
             Ok(Some(doip_target)) => {
@@ -173,9 +149,7 @@ pub(crate) async fn listen_for_vams<T, F>(
                     tracing::info!(ecu_name = %doip_target.ecu, "New Gateway ECU detected");
 
                     match handle_gateway_connection::<T>(
-                        connection_config,
                         doip_target,
-                        doip_connection_config,
                         &gateway.doip_connections,
                         &gateway.ecus,
                         gateway_ecu_map,
@@ -259,7 +233,7 @@ pub(crate) async fn listen_for_vams<T, F>(
         "vam-listen",
         Box::pin(async move {
             let broadcast_ip = "0.0.0.0";
-            let broadcast_socket = if connection_config.source_ip == broadcast_ip {
+            let broadcast_socket = if tester_ip == broadcast_ip {
                 Arc::clone(&gateway.socket)
             } else {
                 match crate::create_socket(broadcast_ip, gateway_port) {
@@ -267,7 +241,7 @@ pub(crate) async fn listen_for_vams<T, F>(
                     Err(e) => {
                         tracing::warn!(
                             broadcast_ip = %broadcast_ip,
-                            tester_ip = %connection_config.source_ip,
+                            tester_ip = %tester_ip,
                             gateway_port = %gateway_port,
                             error = ?e,
                             "Failed to bind broadcast socket, falling back to tester IP,\
@@ -288,15 +262,9 @@ pub(crate) async fn listen_for_vams<T, F>(
                     Some(Ok((doip_msg, source_addr))) = socket.recv() => {
                         if let DoipPayload::VehicleAnnouncementMessage(_) = &doip_msg.payload {
                             handle_doip_response(
-                                &connection_config,
                                 &gateway,
                                 send_timeout,
-                                DoipMessageContext {
-                                    doip_msg,
-                                    source_addr,
-                                    netmask,
-                                    doip_connection_config
-                                },
+                                DoipMessageContext { doip_msg, source_addr, netmask },
                                 &gateway_ecu_map,
                                 &gateway_ecu_name_map,
                                 variant_detection.clone(),

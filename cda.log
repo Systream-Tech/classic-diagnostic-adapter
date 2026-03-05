@@ -1,0 +1,68 @@
+Loading configuration from opensovd-cda.toml
+[2m10:42:05.221[0m [32mINFO[0m[2m in [0m[1mopensovd_cda[0m[2m msg: [0mStarting CDA...
+[2m10:42:05.222[0m [32mINFO[0m[2m in [0m[1mopensovd_cda_lib[0m[2m msg: [0mLoading databases [3mchunk_size[0m[2m=[0m1
+[2m    in [0mopensovd_cda_lib::[1mload_databases[0m
+[2m10:42:05.224[0m [31mERROR[0m[2m in [0m[1mcda_core::diag_kernel::ecumanager[0m[2m msg: [0mFailed to find logical gateway address: Database entry not found: No ComParamRef found for CP_DoIPLogicalGatewayAddress in protocol UDS_Ethernet_DoIP_DOBT
+[2m    in [0mcda_core::diag_kernel::ecumanager::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mload_database[0m
+[2m    in [0mopensovd_cda_lib::[1mload_database_chunk[0m
+[2m    in [0mopensovd_cda_lib::[1mload_databases[0m
+[2m10:42:05.224[0m [31mERROR[0m[2m in [0m[1mcda_core::diag_kernel::ecumanager[0m[2m msg: [0mFailed to find logical ECU address: Database entry not found: No ComParamRef found for CP_UniqueRespIdTable in protocol UDS_Ethernet_DoIP_DOBT
+[2m    in [0mcda_core::diag_kernel::ecumanager::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mload_database[0m
+[2m    in [0mopensovd_cda_lib::[1mload_database_chunk[0m
+[2m    in [0mopensovd_cda_lib::[1mload_databases[0m
+[2m10:42:05.224[0m [31mERROR[0m[2m in [0m[1mcda_core::diag_kernel::ecumanager[0m[2m msg: [0mFailed to find logical functional address: Database entry not found: No ComParamRef found for CP_DoIPLogicalFunctionalAddress in protocol UDS_Ethernet_DoIP_DOBT
+[2m    in [0mcda_core::diag_kernel::ecumanager::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mload_database[0m
+[2m    in [0mopensovd_cda_lib::[1mload_database_chunk[0m
+[2m    in [0mopensovd_cda_lib::[1mload_databases[0m
+[2m10:42:05.251[0m [32mINFO[0m[2m in [0m[1mopensovd_cda_lib[0m[2m msg: [0mLoaded databases [3mdatabase_count[0m[2m=[0m3 [3mduration[0m[2m=[0m29.207831ms
+[2m    in [0mopensovd_cda_lib::[1mload_databases[0m
+[2m10:42:05.251[0m [32mINFO[0m[2m in [0m[1mcda_comm_doip[0m[2m msg: [0mInitializing DoipDiagGateway
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:05.251[0m [32mINFO[0m[2m in [0m[1mcda_comm_doip::vir_vam[0m[2m msg: [0mBroadcasting VIR
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:05.253[0m [33mWARN[0m[2m in [0m[1mcda_comm_doip::vir_vam[0m[2m msg: [0mVAM received but no matching ECU found
+[2m    in [0mcda_comm_doip::vir_vam::[1mhandle_vam[0m
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:05.253[0m [31mERROR[0m[2m in [0m[1mcda_comm_doip::vir_vam[0m[2m msg: [0mFailed to handle VAM [3merror[0m[2m=[0m"No matching ECU found for VAM: [20, 00]"
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:06.254[0m [32mINFO[0m[2m in [0m[1mcda_comm_doip[0m[2m msg: [0mGateways found [3mgateway_count[0m[2m=[0m1
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:06.255[0m [32mINFO[0m[2m in [0m[1mcda_comm_doip::ecu_connection[0m[2m msg: [0mRouting activated
+[2m    in [0mcda_comm_doip::ecu_connection::[1mestablish_ecu_connection[0m
+[2m    in [0mcda_comm_doip::connections::[1mconnection_handler[0m
+[2m    in [0mcda_comm_doip::connections::[1mhandle_gateway_connection[0m
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:06.255[0m [32mINFO[0m[2m in [0m[1mcda_comm_doip::connections[0m[2m msg: [0mConnected to gateway
+[2m    in [0mcda_comm_doip::connections::[1mhandle_gateway_connection[0m
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:06.255[0m [32mINFO[0m[2m in [0m[1mcda_comm_doip::vir_vam[0m[2m msg: [0mListening for spontaneous VAMs
+[2m    in [0mcda_comm_doip::[1mnew[0m
+[2m    in [0mopensovd_cda_lib::[1mcreate_diagnostic_gateway[0m
+[2m10:42:06.265[0m [32mINFO[0m[2m in [0m[1mcda_sovd[0m[2m msg: [0mServer listening [3mlisten_address[0m[2m=[0m0.0.0.0:20002
+[2m    in [0mcda_sovd::[1mlaunch_webserver[0m
+[2m10:42:06.265[0m [32mINFO[0m[2m in [0m[1mcda_core::diag_kernel::ecumanager[0m[2m msg: [0mVoid security plugin provided, skipping security check
+[2m    in [0mcda_core::diag_kernel::ecumanager::[1mcheck_security_plugin[0m
+[2m    in [0mcreate_uds_payload::[1mcreate_uds_payload[0m
+[2m    in [0mcda_comm_uds::[1msend_with_optional_timeout[0m
+[2m    in [0mcda_comm_uds::[1mdetect_variant[0m
+[2m10:53:02.795[0m [32mINFO[0m[2m in [0m[1mcda_sovd::sovd::locks[0m[2m msg: [0mAttempting to create lock
+[2m    in [0mcda_sovd::sovd::locks::[1mpost_handler[0m
+[2m    in [0mcda_sovd::[1mrequest[0m
+[2m10:53:03.319[0m [32mINFO[0m[2m in [0m[1mcda_sovd::sovd::components::ecu::modes::session[0m[2m msg: [0mSetting ECU session mode
+[2m    in [0mcda_sovd::sovd::components::ecu::modes::session::[1mput[0m
+[2m    in [0mcda_sovd::[1mrequest[0m
+[2m10:53:03.319[0m [32mINFO[0m[2m in [0m[1mcda_comm_uds[0m[2m msg: [0mSetting session [3mecu_name[0m[2m=[0mflxc1000 [3msession[0m[2m=[0mextended
+[2m    in [0mcda_comm_uds::[1mset_ecu_session[0m
+[2m    in [0mcda_sovd::sovd::components::ecu::modes::session::[1mput[0m
+[2m    in [0mcda_sovd::[1mrequest[0m
+[2m11:19:06.762[0m [32mINFO[0m[2m in [0m[1mopensovd_cda[0m[2m msg: [0mShutting down...

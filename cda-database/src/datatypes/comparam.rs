@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,6 +7,8 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 use cda_interfaces::{
@@ -224,25 +225,4 @@ fn extract_dop_unit(dop: &dataformat::DOP) -> Option<Unit> {
         factor_to_si_unit: normal_dop.unit_ref().and_then(|u| u.factorsitounit()),
         offset_to_si_unit: normal_dop.unit_ref().and_then(|u| u.offsetitounit()),
     })
-}
-
-/// Map a DOIP NACK number of retries parameter from (String, u32) to (u8, u32).
-/// # Errors
-/// If the string cannot be parsed as a u8 (decimal or hex).
-pub fn map_nack_number_of_retries<K: AsRef<str>>(
-    (name, value): (K, &u32),
-) -> Result<(u8, u32), DiagServiceError> {
-    let name = name.as_ref();
-    let key_result = if let Some(hex_str) = name.strip_prefix("0x") {
-        u8::from_str_radix(hex_str, 16)
-    } else {
-        name.parse::<u8>()
-    }
-    .map_err(|_| {
-        DiagServiceError::ParameterConversionError(format!(
-            "Invalid string for doip.nack_number_of_retries: {name}"
-        ))
-    });
-
-    key_result.map(|key| (key, *value))
 }

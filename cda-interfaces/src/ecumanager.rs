@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,7 +7,12 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
+
+use std::time::Duration;
+
 use serde::Serialize;
 
 use crate::{
@@ -20,41 +24,6 @@ use crate::{
     },
     diagservices::{DiagServiceResponse, UdsPayloadData},
 };
-
-/// Metadata for a service parameter, including constant values for discovery
-#[derive(Debug, Clone, Serialize)]
-pub struct ServiceParameterMetadata {
-    /// Parameter short name (e.g., "`RDBI_DID`", "SESSION")
-    pub name: String,
-    /// Parameter semantic (e.g., "DATA-IDENTIFIER", "SESSION")
-    pub semantic: Option<String>,
-    /// Parameter type and constant value if applicable
-    pub param_type: ParameterTypeMetadata,
-}
-
-/// Parameter type with constant value metadata
-#[derive(Debug, Clone, Serialize)]
-pub enum ParameterTypeMetadata {
-    /// CODED-CONST parameter with fixed value from MDD
-    CodedConst { coded_value: String },
-    /// PHYS-CONST parameter with constant value from MDD
-    PhysConst { phys_constant_value: String },
-    /// VALUE or other dynamic parameter types
-    Value,
-}
-
-/// MUX case information for service response routing
-#[derive(Debug, Clone, Serialize)]
-pub struct MuxCaseInfo {
-    /// Case short name (e.g., "`RDBI_DID_VIN`", "`RDBI_DID_FTP`")
-    pub short_name: String,
-    /// Case long name (e.g., "VIN", "flashTimingParameter")
-    pub long_name: Option<String>,
-    /// Lower limit value for this case (DID value for `ReadDataByIdentifier`)
-    pub lower_limit: Option<String>,
-    /// Upper limit value for this case
-    pub upper_limit: Option<String>,
-}
 
 #[derive(Clone, Copy, Debug, Serialize, PartialEq)]
 pub enum EcuState {
@@ -70,10 +39,6 @@ pub enum EcuState {
 pub struct EcuVariant {
     pub name: Option<String>,
     pub is_base_variant: bool,
-    /// Indicates whether this variant was selected as a fallback when no specific variant matched.
-    /// When true, this is a fallback scenario.
-    /// When false, it's an exact match (even if `is_base_variant` is true).
-    pub is_fallback: bool,
     pub state: EcuState,
     pub logical_address: u16,
 }
@@ -122,11 +87,6 @@ pub trait EcuManager:
     + 'static
 {
     type Response: DiagServiceResponse;
-    /// This indicates whether the `EcuManager` is representing an ECU or
-    /// a functional description only.
-    #[must_use]
-    fn is_physical_ecu(&self) -> bool;
-
     #[must_use]
     fn variant(&self) -> EcuVariant;
 
@@ -152,12 +112,6 @@ pub trait EcuManager:
     /// Sets the state to `EcuState::Duplicate` and unload the database.
     /// Database will be reloaded before next variant detection.
     fn mark_as_duplicate(&mut self);
-
-    /// Mark this ECU as having no variant detected. Call this when variant detection fails
-    /// or when all duplicated ECUs only fall back to base variant without finding a specific match.
-    /// Sets the state to `EcuState::NoVariantDetected` and unload the database.
-    /// Database will be reloaded before next variant detection.
-    fn mark_as_no_variant_detected(&mut self);
 
     /// This allows to (re)load a database after unloading it during runtime, which could happen
     /// if initially the ECU wasn´t responding but later another request
@@ -204,7 +158,7 @@ pub trait EcuManager:
         &self,
         security_plugin: &DynamicPlugin,
         rawdata: Vec<u8>,
-    ) -> impl Future<Output = Result<ServicePayload, DiagServiceError>> + Send;
+    ) -> Result<ServicePayload, DiagServiceError>;
     /// Converts given `UdsPayloadData` into a UDS request payload for the given `DiagService`.
     ///
     /// # Errors
@@ -217,67 +171,36 @@ pub trait EcuManager:
         security_plugin: &DynamicPlugin,
         data: Option<UdsPayloadData>,
     ) -> impl Future<Output = Result<ServicePayload, DiagServiceError>> + Send;
-    /// Convert a UDS REQUEST payload into a `DiagServiceResponse` using the
-    /// REQUEST definition in MDD. This function parses incoming REQUEST payloads
-    /// (not responses) for bidirectional UDS-to-SOVD conversion scenarios.
-    ///
-    /// # Errors
-    /// Returns `Err` in the following cases:
-    /// - **Service not supported**: The service has no REQUEST definition in the database
-    ///   (returns `RequestNotSupported`). This indicates the MDD database doesn't define
-    ///   how to parse request payloads for this service.
-    /// - **Invalid database**: Required parameter metadata (short names) is missing from
-    ///   the database structure (returns `InvalidDatabase`). This is a database integrity issue.
-    /// - **Data mapping errors**: Individual parameters cannot be decoded from the raw UDS bytes
-    ///   due to type mismatches, invalid values, or insufficient payload length
-    ///   (returns `DataError`).
-    ///   These errors are collected and included in the response structure for debugging.
-    fn convert_request_from_uds(
-        &self,
-        diag_service: &DiagComm,
-        payload: &ServicePayload,
-        map_to_json: bool,
-    ) -> impl Future<Output = Result<Self::Response, DiagServiceError>> + Send;
     /// Looks up a single ECU job by name for the current ECU variant.
     /// # Errors
     /// Will return `Err` if the job cannot be found in the database
     /// Unlikely other case is that neither a lookup in the current nor the base variant succeeded.
     fn lookup_single_ecu_job(&self, job_name: &str) -> Result<single_ecu::Job, DiagServiceError>;
-
-    /// Sets the service state for a given service identifier.
-    ///
-    /// This method stores the current state associated with a diagnostic service,
-    /// identified by its service ID (SID). The state value is typically used to
-    /// track the value of `/modes` after executing a service.
-    ///
-    /// # Parameters
-    /// * `sid` - The service identifier (SID) as a byte value
-    /// * `value` - The state value to associate with this service
-    ///   (e.g., session name, security level)
-    fn set_service_state(&self, sid: u8, value: String) -> impl Future<Output = ()> + Send;
-
-    /// Retrieves the current service state for a given service identifier.
-    ///
-    /// This method returns the previously stored state for a diagnostic service,
-    /// identified by its service ID (SID). Returns `None` if no state has been
-    /// set for the given service identifier.
-    ///
-    /// # Parameters
-    /// * `sid` - The service identifier (SID) as a byte value
-    ///
-    /// # Returns
-    /// * `Some(String)` - The stored state value if it exists
-    /// * `None` - If no state has been set for this service identifier
-    fn get_service_state(&self, sid: u8) -> impl Future<Output = Option<String>> + Send;
-
+    /// Update the internally tracked ecu session.
+    /// Has to be called after changing the session, to make sure the transition lookup keep working
+    /// # Errors
+    /// This is also (re)starting the reset task that is
+    /// setting the session and security access back to the default value.
+    /// To do this the defaults have to looked up which might fail.
+    /// In that case the error is forwarded
+    fn set_session(&self, session: &str, expiration: Duration) -> Result<(), DiagServiceError>;
+    /// Update the internally tracked ecu security access.
+    /// Has to be called after changing the session, to make sure the transition lookup keep working
+    /// # Errors
+    /// This is also (re)starting the reset task that is setting the session and security
+    /// access back to the default value.
+    /// To do this the defaults have to looked up which might fail.
+    /// In that case the error is forwarded
+    fn set_security_access(
+        &self,
+        security_access: &str,
+        expiration: Duration,
+    ) -> Result<(), DiagServiceError>;
     /// Lookup the transition between the active session and the requested one.
     /// # Errors
     /// * `DiagServiceError::AccessDenied` if no transition exists
     /// * `DiagServiceError::NotFound` on various lookup errors.
-    fn lookup_session_change(
-        &self,
-        session: &str,
-    ) -> impl Future<Output = Result<DiagComm, DiagServiceError>> + Send;
+    fn lookup_session_change(&self, session: &str) -> Result<DiagComm, DiagServiceError>;
     /// Lookup the transition from the current security state to the given one.
     /// As switching to a new security state might need authentication.
     /// * `RequestSeed(DiagComm)`: A seeds needs to be requested via the provided diag comm.
@@ -293,7 +216,7 @@ pub trait EcuManager:
         level: &str,
         seed_service: Option<&String>,
         has_key: bool,
-    ) -> impl Future<Output = Result<SecurityAccess, DiagServiceError>> + Send;
+    ) -> Result<SecurityAccess, DiagServiceError>;
     /// Retrieves the name of the parameter used to send the key for security access.
     /// # Errors
     /// Will return `DiagServiceError` if the parameter cannot be found in the database
@@ -306,22 +229,14 @@ pub trait EcuManager:
     /// # Errors
     /// Will return `DiagServiceError` if the session cannot be found in the database
     /// or no session is currently set or no variant is loaded.
-    fn session(&self) -> impl Future<Output = Result<String, DiagServiceError>> + Send;
-    /// Retrieves the name of the default ecu session
-    /// # Errors
-    /// Will return `DiagServiceError` if no default session is found in the database
-    fn default_session(&self) -> Result<String, DiagServiceError>;
+    fn session(&self) -> Result<String, DiagServiceError>;
     /// Retrieves the name of the current ecu security level,
     /// i.e. `level_42`
     /// The exact values depends on the ECU parameterization.
     /// # Errors
     /// Will return `DiagServiceError` if the security access cannot be found in the database
     /// or no security access is currently set or no variant is loaded.
-    fn security_access(&self) -> impl Future<Output = Result<String, DiagServiceError>> + Send;
-    /// Retrieves the name of the default ecu security level,
-    /// # Errors
-    /// Will return `DiagServiceError` if no default session is found in the database
-    fn default_security_access(&self) -> Result<String, DiagServiceError>;
+    fn security_access(&self) -> Result<String, DiagServiceError>;
     /// Lookup a service by a given function class name and service id.
     /// # Errors
     /// Will return `Err` if the lookup failed
@@ -335,34 +250,6 @@ pub trait EcuManager:
     /// # Errors
     /// Will return `Err` if either the variant or base variant cannot be resolved.
     fn lookup_service_names_by_sid(&self, service_id: u8) -> Result<Vec<String>, DiagServiceError>;
-    /// Lookup a service by its service id and name for the current ECU variant.
-    /// # Errors
-    /// Will return `Err` if the lookup failed
-    fn lookup_service_by_sid_and_name(
-        &self,
-        service_id: u8,
-        name: &str,
-    ) -> Result<DiagComm, DiagServiceError>;
-
-    /// Get parameter metadata for a specific service, including constant values for PHYS-CONST and
-    /// CODED-CONST parameters.
-    /// This is useful for discovering which DIDs are handled by which services.
-    /// # Errors
-    /// Will return `Err` if the service cannot be found or parameter metadata cannot be extracted.
-    fn get_service_parameter_metadata(
-        &self,
-        service_name: &str,
-    ) -> Result<Vec<ServiceParameterMetadata>, DiagServiceError>;
-    /// Get MUX case information for services using multiplexed responses
-    /// (e.g., `ReadDataByIdentifier` with different DIDs).
-    /// The MUX cases contain the actual DID values in their `lower_limit/upper_limit` fields.
-    /// # Errors
-    /// Will return `Err` if MUX case information cannot be retrieved.
-    fn get_mux_cases_for_service(
-        &self,
-        service_name: &str,
-    ) -> Result<Vec<MuxCaseInfo>, DiagServiceError>;
-
     /// Retrieve all `read` services for the current ECU variant.
     fn get_components_data_info(&self) -> Vec<ComponentDataInfo>;
     /// Retrieve all configuration type services for the current ECU variant.
@@ -388,24 +275,6 @@ pub trait EcuManager:
     /// Retrieve the revision of the ECU variant if available,
     /// otherwise return 0.0.0
     fn revision(&self) -> String;
-
-    /// Convert a response to service 0x14 according to
-    /// ISO-14229-1 12.2.3 and 12.2.4
-    /// # Errors
-    /// - `DiagServiceError::UnexpectedResponse` if the SID for the positive response doesn't
-    ///   match 0x54
-    /// - `DiagServiceError::BadPayload` if the SID is missing
-    fn convert_service_14_response(
-        &self,
-        diag_comm: DiagComm,
-        response: ServicePayload,
-    ) -> Result<Self::Response, DiagServiceError>;
-}
-
-#[derive(PartialEq, Eq, Debug, Clone, Copy)]
-pub enum EcuManagerType {
-    Ecu,
-    FunctionalDescription,
 }
 
 impl Protocol {

@@ -1,5 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
-# SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -7,6 +6,8 @@
 # This program and the accompanying materials are made available under the
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
 
 [package]
 name = "cda-sovd"
@@ -27,13 +28,14 @@ workspace = true
 # internal dependencies
 cda-interfaces = { workspace = true }
 cda-plugin-security = { workspace = true }
-cda-tracing = { workspace = true }
 sovd-interfaces = { workspace = true }
+cda-comm-doip = { workspace = true }
 
-# external
 tokio = { workspace = true, features = ["net"] }
+futures = { workspace = true }                   # external
 
-# openapi generation
+async-trait = { workspace = true }
+
 aide = { workspace = true, features = [
   "axum",
   "swagger",
@@ -47,7 +49,7 @@ aide = { workspace = true, features = [
   "axum-extra-with-rejection",
   "macros",
   "serde_qs",
-] }
+] } # openapi generation
 schemars = { workspace = true }
 
 # web server
@@ -63,6 +65,7 @@ axum-extra = { workspace = true, features = ["typed-header", "with-rejection"] }
 chrono = { workspace = true }
 http = { workspace = true }
 indexmap = { workspace = true }
+jsonwebtoken = { workspace = true }
 mime = { workspace = true }
 serde = { workspace = true, features = ["derive"] }
 serde_json = { workspace = true }
@@ -88,8 +91,3 @@ percent-encoding = { workspace = true }
 default = []
 auth = []
 dlt-tracing = ["cda-interfaces/dlt-tracing"]
-
-[dev-dependencies]
-cda-interfaces = { workspace = true, features = ["test-utils"] }
-cda-plugin-security = { workspace = true, features = ["test-utils"] }
-mockall = { workspace = true }

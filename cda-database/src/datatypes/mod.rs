@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,6 +7,8 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 use std::fmt::Debug;
@@ -112,7 +113,6 @@ dataformat_wrapper!(StateChart<'a>, dataformat::StateChart<'a>);
 
 // Requests, Responses...
 dataformat_wrapper!(DiagService<'a>, dataformat::DiagService<'a>);
-dataformat_wrapper!(SingleEcuJob<'a>, dataformat::SingleEcuJob<'a>);
 dataformat_wrapper!(DiagComm<'a>, dataformat::DiagComm<'a>);
 dataformat_wrapper!(DiagLayer<'a>, dataformat::DiagLayer<'a>);
 dataformat_wrapper!(Parameter<'a>, dataformat::Param<'a>);
@@ -165,15 +165,11 @@ impl DiagService<'_> {
     }
 
     #[must_use]
-    /// Get the request sub-function ID if defined
-    /// Returns a tuple of (`value`, `bit_length`) if found
     pub fn request_sub_function_id(&self) -> Option<(u16, u32)> {
         self.find_request_sid_or_sub_func_param(1, 0)
     }
 
     #[must_use]
-    /// Find the request SID or sub-function parameter based on byte and bit position
-    /// Returns a tuple of (`value`, `bit_length`) if found
     fn find_request_sid_or_sub_func_param(
         &self,
         byte_pos: u32,
@@ -540,28 +536,14 @@ impl DiagnosticDatabase {
     /// # Errors
     /// `DiagServiceError::InvalidDatabase` if ECU data is not loaded
     pub fn diag_layers(&self) -> Result<Vec<datatypes::DiagLayer<'_>>, DiagServiceError> {
-        let ecu_data = self.ecu_data()?;
-        if let Some(variants) = ecu_data.variants()
-            && !variants.is_empty()
-        {
-            Ok(variants
-                .iter()
-                .filter_map(|variant| variant.diag_layer())
-                .map(datatypes::DiagLayer)
-                .collect::<Vec<_>>())
-        } else if let Some(functional_groups) = ecu_data.functional_groups()
-            && !functional_groups.is_empty()
-        {
-            Ok(functional_groups
-                .iter()
-                .filter_map(|fg| fg.diag_layer())
-                .map(datatypes::DiagLayer)
-                .collect::<Vec<_>>())
-        } else {
-            Err(DiagServiceError::InvalidDatabase(
-                "No variants or functional groups found in ECU data.".to_owned(),
-            ))
-        }
+        Ok(self
+            .ecu_data()?
+            .variants()
+            .into_iter()
+            .flat_map(|vars| vars.iter())
+            .filter_map(|variant| variant.diag_layer())
+            .map(datatypes::DiagLayer)
+            .collect::<Vec<_>>())
     }
 
     /// Get the base variant from the ECU data

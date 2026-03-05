@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,6 +7,8 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 use cda_interfaces::diagservices::FieldParseError;
@@ -72,7 +73,7 @@ impl IntoSovd for FieldParseError {
     }
 }
 
-pub(crate) fn get_content_type_and_accept(
+fn get_content_type_and_accept(
     headers: &http::HeaderMap,
 ) -> Result<(Option<mime::Mime>, mime::Mime), ApiError> {
     let content_type = headers

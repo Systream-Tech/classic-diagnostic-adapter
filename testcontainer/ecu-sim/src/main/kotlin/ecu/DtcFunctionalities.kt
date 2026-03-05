@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,6 +7,8 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
 
 import ecu.DTCAndStatusRecord
@@ -46,25 +47,16 @@ fun RequestsData.addDtcRequests() {
             } else {
                 null
             }
-        // ISO-14229-1, D.1
-        // 0xFFFFFF means delete all groups
-        val cleanupAll = dtcCode == 0xFFFFFF
         FaultMemory.entries
             .filter { memory == null || it.memory == memory }
             .forEach { entry ->
                 val dtcFaults = ecu.dtcFaults(entry)
-                if (cleanupAll) {
-                    dtcFaults.clear()
-                    ecu.logger.info("Removed all DTCs for memory ${entry.memory}")
+                if (dtcFaults.remove(dtcCode) != null) {
+                    ecu.logger.info("DTC ${dtcCode.toString(16)} removed")
                 } else {
-                    if (dtcFaults.remove(dtcCode) != null) {
-                        ecu.logger.info("DTC ${dtcCode.toString(16)} removed")
-                    } else {
-                        ecu.logger.info("DTC ${dtcCode.toString(16)} couldn't be removed (not present)")
-                    }
+                    ecu.logger.info("DTC ${dtcCode.toString(16)} couldn't be removed (not present)")
                 }
             }
-        ack()
     }
 
     request("19 01 []", "ReadDTCInformation_NumberByStatusMask") {

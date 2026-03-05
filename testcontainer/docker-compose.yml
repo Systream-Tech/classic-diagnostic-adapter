@@ -1,5 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
-# SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -7,6 +6,8 @@
 # This program and the accompanying materials are made available under the
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
 
 services:
   ecu-sim:
@@ -35,9 +36,6 @@ services:
     build:
       context: ..
       dockerfile: testcontainer/cda/Dockerfile
-      args:
-        - SOURCE_DATE_EPOCH
-        - SOURCE_GIT_SHA
     ports:
       - "${CDA_PORT:-20002}:20002"
     volumes:
@@ -49,7 +47,7 @@ services:
       ecu-sim:
         condition: service_healthy
     environment:
-      - RUST_LOG=debug
+      - RUST_LOG=info
     command: ["-d", "/app/odx"]
     restart: unless-stopped
 

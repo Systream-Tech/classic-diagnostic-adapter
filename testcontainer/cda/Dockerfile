@@ -1,5 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
-# SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -7,10 +6,10 @@
 # This program and the accompanying materials are made available under the
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
 
 ARG RUST_VERSION=1.88
-ARG SOURCE_DATE_EPOCH
-ARG SOURCE_GIT_SHA
 
 # --- Stage 1: Install cargo-chef and sccache ---
 FROM rust:${RUST_VERSION}-slim-trixie AS chef
@@ -41,7 +40,6 @@ COPY cda-plugin-security/Cargo.toml ./cda-plugin-security/Cargo.toml
 COPY cda-sovd/Cargo.toml ./cda-sovd/Cargo.toml
 COPY cda-tracing/Cargo.toml ./cda-tracing/Cargo.toml
 COPY cda-sovd-interfaces/Cargo.toml ./cda-sovd-interfaces/Cargo.toml
-COPY cda-health/Cargo.toml ./cda-health/Cargo.toml
 COPY integration-tests/Cargo.toml ./integration-tests/Cargo.toml
 
 # Generate the recipe.json which describes dependencies
@@ -63,9 +61,6 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry,sharing=locked \
 
 # --- Stage 4: Build the application ---
 FROM chef AS builder
-ARG SOURCE_DATE_EPOCH
-ARG SOURCE_GIT_SHA
-
 WORKDIR /app
 # Copy pre-built dependencies from the cacher stage
 COPY --from=cacher /app/target target
@@ -82,7 +77,6 @@ COPY cda-plugin-security ./cda-plugin-security
 COPY cda-sovd ./cda-sovd
 COPY cda-tracing ./cda-tracing
 COPY cda-sovd-interfaces ./cda-sovd-interfaces
-COPY cda-health ./cda-health/
 COPY integration-tests ./integration-tests
 
 ENV RUSTC_WRAPPER=sccache \
@@ -91,8 +85,6 @@ ENV RUSTC_WRAPPER=sccache \
 RUN --mount=type=cache,target=/usr/local/cargo/registry,sharing=locked \
     --mount=type=cache,target=/usr/local/cargo/git,sharing=locked \
     --mount=type=cache,target=$SCCACHE_DIR,sharing=locked \
-    export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH} && \
-    export SOURCE_GIT_SHA=${SOURCE_GIT_SHA} && \
     cargo build --release --bin opensovd-cda && \
     cp target/release/opensovd-cda /tmp/opensovd-cda
 

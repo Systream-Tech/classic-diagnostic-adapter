@@ -1,6 +1,5 @@
 /*
- * SPDX-License-Identifier: Apache-2.0
- * SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+ * Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
  *
  * See the NOTICE file(s) distributed with this work for additional
  * information regarding copyright ownership.
@@ -8,7 +7,11 @@
  * This program and the accompanying materials are made available under the
  * terms of the Apache License Version 2.0 which is available at
  * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * SPDX-License-Identifier: Apache-2.0
  */
+
+use std::fmt::Display;
 
 use aide::OperationOutput;
 use axum::{
@@ -23,7 +26,7 @@ use axum::{
     response::{IntoResponse, Response},
 };
 use cda_interfaces::{
-    DiagServiceError, HashMap, HashMapExtensions, HashSet, diagservices::DiagServiceResponse,
+    DiagServiceError, HashMap, HashMapExtensions, diagservices::DiagServiceResponse,
     file_manager::MddError,
 };
 use serde::{Deserialize, Serialize};
@@ -31,59 +34,30 @@ use serde_qs::axum::QsQueryRejection;
 use sovd_interfaces::error::ErrorCode;
 
 #[allow(dead_code)]
-#[derive(Debug, Deserialize, Serialize, schemars::JsonSchema, thiserror::Error)]
+#[derive(Debug, Deserialize, Serialize, schemars::JsonSchema)]
 pub enum ApiError {
-    #[error("Bad Request: {0}")]
     BadRequest(String),
-    #[error("Forbidden: {}", .0.as_ref().map(|m| format!(": {m}")).unwrap_or_default())]
     Forbidden(Option<String>),
-    #[error("Not Found: {}", .0.as_ref().map(|m| format!(": {m}")).unwrap_or_default())]
     NotFound(Option<String>),
-    #[error("Internal Server Error: {}", .0.as_ref().map(|m| format!(": {m}")).unwrap_or_default())]
     InternalServerError(Option<String>),
-    #[error("Conflict: {0}")]
     Conflict(String),
-    #[error("Not Responding: {0}")]
-    NotResponding(String),
-    #[error("The value of the parameter is not of the allowed values")]
-    InvalidParameter { possible_values: HashSet<String> },
-}
-
-impl ApiError {
-    #[must_use]
-    pub fn error_and_vendor_code(&self) -> (ErrorCode, Option<VendorErrorCode>) {
-        match &self {
-            ApiError::NotResponding(_) => (ErrorCode::NotResponding, None),
-            ApiError::NotFound(_) => (ErrorCode::VendorSpecific, Some(VendorErrorCode::NotFound)),
-            ApiError::BadRequest(_) => (
-                ErrorCode::InvalidResponseContent,
-                Some(VendorErrorCode::BadRequest),
-            ),
-            ApiError::Forbidden(_) => (ErrorCode::InsufficientAccessRights, None),
-            ApiError::InvalidParameter { .. } => (
-                ErrorCode::VendorSpecific,
-                Some(VendorErrorCode::InvalidParameter),
-            ),
-            _ => (ErrorCode::SovdServerFailure, None),
-        }
-    }
 }
 
 impl From<DiagServiceError> for ApiError {
     fn from(value: DiagServiceError) -> Self {
-        match value {
+        match &value {
             DiagServiceError::UdsLookupError(_) | DiagServiceError::NotFound(_) => {
                 ApiError::NotFound(Some(value.to_string()))
             }
-            DiagServiceError::InvalidParameter { possible_values } => {
-                ApiError::InvalidParameter { possible_values }
-            }
+
             DiagServiceError::InvalidDatabase(_)
             | DiagServiceError::DatabaseEntryNotFound(_)
             | DiagServiceError::VariantDetectionError(_)
             | DiagServiceError::EcuOffline(_)
+            | DiagServiceError::ConfigurationError(_)
+            | DiagServiceError::SetupError(_)
             | DiagServiceError::ResourceError(_)
-            | DiagServiceError::ConnectionClosed(_)
+            | DiagServiceError::ConnectionClosed
             | DiagServiceError::InvalidRequest(_)
             | DiagServiceError::SendFailed(_)
             | DiagServiceError::InvalidAddress(_)
@@ -92,13 +66,12 @@ impl From<DiagServiceError> for ApiError {
             | DiagServiceError::NotEnoughData { .. }
             | DiagServiceError::NoResponse(_)
             | DiagServiceError::Nack(_)
-            | DiagServiceError::InvalidState(_)
+            | DiagServiceError::InvalidSession(_)
             | DiagServiceError::UnknownOperation
             | DiagServiceError::UnexpectedResponse(_)
             | DiagServiceError::RequestNotSupported(_)
             | DiagServiceError::Timeout
             | DiagServiceError::DataError(_)
-            | DiagServiceError::AmbiguousParameters { .. }
             | DiagServiceError::AccessDenied(_) => ApiError::BadRequest(value.to_string()),
 
             DiagServiceError::InvalidSecurityPlugin => {
@@ -116,6 +89,22 @@ impl From<MddError> for ApiError {
             | MddError::Parsing(s)
             | MddError::MissingData(s) => ApiError::InternalServerError(Some(s)),
             MddError::InvalidParameter(s) => ApiError::NotFound(Some(s)),
+        }
+    }
+}
+
+impl Display for ApiError {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let (status, message) = match &self {
+            ApiError::BadRequest(message) => ("Bad Request", Some(message)),
+            ApiError::Forbidden(message) => ("Forbidden", message.as_ref()),
+            ApiError::NotFound(message) => ("Not Found", message.as_ref()),
+            ApiError::InternalServerError(message) => ("Internal Server Error", message.as_ref()),
+            ApiError::Conflict(message) => ("Conflict", Some(message)),
+        };
+        match message {
+            Some(message) => write!(f, "{status}: {message}"),
+            None => write!(f, "{status}"),
         }
     }
 }
@@ -159,7 +148,7 @@ pub struct ErrorWrapper {
     pub include_schema: bool,
 }
 
-#[derive(Debug, PartialEq, Eq, Serialize, Deserialize, schemars::JsonSchema)]
+#[derive(Serialize, schemars::JsonSchema)]
 #[serde(rename_all = "kebab-case")]
 pub enum VendorErrorCode {
     /// The requested resource was not found.
@@ -175,8 +164,6 @@ pub enum VendorErrorCode {
     ///
     /// eg. A Value received by the ECU was outside of the expected range
     ErrorInterpretingMessage,
-    /// The given parameter is not valid.
-    InvalidParameter,
 }
 
 impl OperationOutput for ErrorWrapper {
@@ -256,48 +243,6 @@ impl IntoResponse for ErrorWrapper {
                         message,
                         error_code: ErrorCode::VendorSpecific,
                         vendor_code: Some(VendorErrorCode::BadRequest),
-                        parameters: None,
-                        error_source: None,
-                        schema,
-                    },
-                ),
-            ),
-            ApiError::InvalidParameter { possible_values } => {
-                let mut parameters = HashMap::new();
-                parameters.insert(
-                    "details".to_owned(),
-                    serde_json::Value::String("value".to_owned()),
-                );
-                parameters.insert(
-                    "possiblevalues".to_owned(),
-                    serde_json::Value::Array(
-                        possible_values
-                            .into_iter()
-                            .map(|v| serde_json::Value::String(v.to_lowercase()))
-                            .collect(),
-                    ),
-                );
-                (
-                    StatusCode::BAD_REQUEST,
-                    Json(
-                        sovd_interfaces::error::ApiErrorResponse::<VendorErrorCode> {
-                            message: "The parameter value is not valid".to_owned(),
-                            error_code: ErrorCode::VendorSpecific,
-                            vendor_code: Some(VendorErrorCode::InvalidParameter),
-                            parameters: Some(parameters),
-                            error_source: None,
-                            schema,
-                        },
-                    ),
-                )
-            }
-            ApiError::NotResponding(message) => (
-                StatusCode::GATEWAY_TIMEOUT,
-                Json(
-                    sovd_interfaces::error::ApiErrorResponse::<VendorErrorCode> {
-                        message,
-                        error_code: ErrorCode::NotResponding,
-                        vendor_code: None,
                         parameters: None,
                         error_source: None,
                         schema,

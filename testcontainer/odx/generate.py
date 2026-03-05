@@ -1,5 +1,4 @@
-# SPDX-License-Identifier: Apache-2.0
-# SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
 #
 # See the NOTICE file(s) distributed with this work for additional
 # information regarding copyright ownership.
@@ -7,6 +6,8 @@
 # This program and the accompanying materials are made available under the
 # terms of the Apache License Version 2.0 which is available at
 # https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
 
 import odxtools
 from odxtools.database import Database
@@ -23,8 +24,8 @@ from odxtools.odxlink import OdxLinkId, DocType, OdxDocFragment
 from odxtools.parentref import ParentRef
 
 from authentication import add_authentication_services
-from communication_control import add_communication_control_services
 from comparams import generate_comparam_refs
+from dtc import add_dtc_services
 from helper import ref
 from metadata import (
     add_functional_classes,
@@ -35,11 +36,6 @@ from metadata import (
 from reset import add_reset_services
 from security_access import add_security_access_services
 from shared import add_common_datatypes, add_state_charts, add_common_diag_comms
-from dtc_services import (
-    add_dtc_clear_services,
-    add_dtc_read_services,
-    add_dtc_setting_services,
-)
 from transferdata import add_transfer_services
 from typing import List, Tuple
 
@@ -129,18 +125,12 @@ def add_base_variant(
     add_common_diag_comms(base_variant)
     # 11
     add_reset_services(base_variant)
-    # 28
-    add_communication_control_services(base_variant)
-    # 29
-    add_authentication_services(base_variant)
     # 34, 36, 37
     add_transfer_services(base_variant)
-    # 85
-    add_dtc_setting_services(base_variant)
-    # 19
-    add_dtc_read_services(base_variant)
-    # 14
-    add_dtc_clear_services(base_variant)
+    # 19 04, 19 06
+    add_dtc_services(base_variant)
+    # 29
+    add_authentication_services(base_variant)
 
     dlc.base_variants.append(BaseVariant(diag_layer_raw=base_variant))
 

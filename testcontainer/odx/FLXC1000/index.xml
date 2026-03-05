@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CATALOG xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" F-DTD-VERSION="ODX-2.2.0" xsi:noNamespaceSchemaLocation="odx-cc.xsd">
+  <SHORT-NAME>FLXC1000</SHORT-NAME>
+  <ABLOCKS>
+    <ABLOCK UPD="UNCHANGED">
+      <SHORT-NAME>diagnostic_data</SHORT-NAME>
+      <FILES>
+        <FILE CREATION-DATE="2026-01-29T04:52:51" MIME-TYPE="application/x-asam.odx.odx-d">UDS_Ethernet_DoIP.odx-d</FILE>
+      </FILES>
+    </ABLOCK>
+    <ABLOCK UPD="UNCHANGED">
+      <SHORT-NAME>diagnostic_data</SHORT-NAME>
+      <FILES>
+        <FILE CREATION-DATE="2026-01-29T04:52:51" MIME-TYPE="application/x-asam.odx.odx-d">UDS_Ethernet_DoIP_DOBT.odx-d</FILE>
+      </FILES>
+    </ABLOCK>
+    <ABLOCK UPD="UNCHANGED">
+      <SHORT-NAME>diagnostic_data</SHORT-NAME>
+      <FILES>
+        <FILE CREATION-DATE="2026-01-29T04:52:51" MIME-TYPE="application/x-asam.odx.odx-d">FLXC1000.odx-d</FILE>
+      </FILES>
+    </ABLOCK>
+    <ABLOCK UPD="UNCHANGED">
+      <SHORT-NAME>diagnostic_data</SHORT-NAME>
+      <FILES>
+        <FILE CREATION-DATE="2026-01-29T04:52:51" MIME-TYPE="application/x-asam.odx.odx-c">ISO_14229_5_on_ISO_13400_2.odx-c</FILE>
+      </FILES>
+    </ABLOCK>
+    <ABLOCK UPD="UNCHANGED">
+      <SHORT-NAME>diagnostic_data</SHORT-NAME>
+      <FILES>
+        <FILE CREATION-DATE="2026-01-29T04:52:51" MIME-TYPE="application/x-asam.odx.odx-cs">ISO_13400_2.odx-cs</FILE>
+      </FILES>
+    </ABLOCK>
+    <ABLOCK UPD="UNCHANGED">
+      <SHORT-NAME>diagnostic_data</SHORT-NAME>
+      <FILES>
+        <FILE CREATION-DATE="2026-01-29T04:52:51" MIME-TYPE="application/x-asam.odx.odx-cs">ISO_14229_5.odx-cs</FILE>
+      </FILES>
+    </ABLOCK>
+  </ABLOCKS>
+</CATALOG>
