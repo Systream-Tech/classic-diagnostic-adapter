@@ -1,0 +1,63 @@
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+
+[package]
+name = "cda-tracing"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+description = "SOVD webserver used in CDA"
+homepage.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+serde = { workspace = true, features = ["derive"] }
+tokio = { workspace = true }
+thiserror = { workspace = true }
+# logging & tracing
+tracing = { workspace = true }
+tracing-core = { workspace = true }
+tracing-appender = { workspace = true }
+tracing-opentelemetry = { workspace = true }
+tracing-subscriber = { workspace = true, features = [
+  "ansi",
+  "chrono",
+  "env-filter",
+  "fmt",
+  "json",
+  "parking_lot",
+  "std",
+] }
+tracing-dlt = { workspace = true, optional = true }
+strip-ansi-escapes = { workspace = true } # Strip ANSI escape codes from strings, used for file logging
+nu-ansi-term = { workspace = true } # ANSI terminal support for terminal log output
+# otel
+opentelemetry = { workspace = true, features = ["trace"] }
+opentelemetry_sdk = { workspace = true, features = ["trace"] }
+opentelemetry-otlp = { workspace = true, features = ["metrics", "grpc-tonic"] }
+opentelemetry-semantic-conventions = { workspace = true, features = [
+  "semconv_experimental",
+] }
+
+# tokio console
+console-subscriber = { workspace = true, optional = true }
+
+[features]
+default = []
+tokio-tracing = ["dep:console-subscriber", "tokio/tracing"]
+dlt-tracing = ["dep:tracing-dlt"]
+dlt-tracing-load-control = ["dlt-tracing", "tracing-dlt?/trace_load_ctrl"]

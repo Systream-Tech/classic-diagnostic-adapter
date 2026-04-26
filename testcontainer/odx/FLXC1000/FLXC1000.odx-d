@@ -1,0 +1,2170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- Written using odxtools 11.0.0 -->
+<ODX MODEL-VERSION="2.2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="odx.xsd">
+ <DIAG-LAYER-CONTAINER ID="DLC.FLXC1000">
+   <SHORT-NAME>FLXC1000</SHORT-NAME>
+   <ADMIN-DATA>
+    <DOC-REVISIONS>
+     <DOC-REVISION>
+      <REVISION-LABEL>00.01.00</REVISION-LABEL>
+      <DATE>2026-01-29T04:52:51.519690</DATE>
+     </DOC-REVISION>
+    </DOC-REVISIONS>
+   </ADMIN-DATA>
+   <COMPANY-DATAS>
+
+     <COMPANY-DATA ID="CD.EB_Enterprises">
+      <SHORT-NAME>ELB Enterprises</SHORT-NAME>
+      <LONG-NAME>Dr. E. Brown Enterprises</LONG-NAME>
+      <DESC>24hr Scientific Services</DESC>
+      <ROLES>
+      </ROLES>
+      <TEAM-MEMBERS>
+       <TEAM-MEMBER ID="TM.ELB_Enterprises.DocBrown">
+        <SHORT-NAME>Doc Brown</SHORT-NAME>
+        <LONG-NAME>Dr. Emmett Lathrop Brown</LONG-NAME>
+        <ROLES>
+         <ROLE>founder</ROLE>
+         <ROLE>chief scientist</ROLE>
+        </ROLES>
+       </TEAM-MEMBER>
+       <TEAM-MEMBER ID="TM.ELB_Enterprises.MartyMcFly">
+        <SHORT-NAME>Marty McFly</SHORT-NAME>
+        <LONG-NAME>Martin Seamus McFly</LONG-NAME>
+        <ROLES>
+         <ROLE>driver</ROLE>
+        </ROLES>
+       </TEAM-MEMBER>
+      </TEAM-MEMBERS>
+     </COMPANY-DATA>
+
+     <COMPANY-DATA ID="CD.Fusion_Industries">
+      <SHORT-NAME>Fusion Industries</SHORT-NAME>
+      <LONG-NAME>Fusion Industries</LONG-NAME>
+      <ROLES>
+      </ROLES>
+      <TEAM-MEMBERS>
+      </TEAM-MEMBERS>
+     </COMPANY-DATA>
+   </COMPANY-DATAS>
+  <BASE-VARIANTS>
+  <BASE-VARIANT ID="BV.FLXC1000">
+     
+     <SHORT-NAME>FLXC1000</SHORT-NAME>
+     <FUNCT-CLASSS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.Session">
+          <SHORT-NAME>Session</SHORT-NAME>
+        </FUNCT-CLASS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.EcuReset">
+          <SHORT-NAME>EcuReset</SHORT-NAME>
+        </FUNCT-CLASS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.CommCtrl">
+          <SHORT-NAME>CommCtrl</SHORT-NAME>
+        </FUNCT-CLASS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.Ident">
+          <SHORT-NAME>Ident</SHORT-NAME>
+        </FUNCT-CLASS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.StandardDataTransfer">
+          <SHORT-NAME>StandardDataTransfer</SHORT-NAME>
+        </FUNCT-CLASS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.SecurityAccess">
+          <SHORT-NAME>SecurityAccess</SHORT-NAME>
+        </FUNCT-CLASS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.Authentication">
+          <SHORT-NAME>Authentication</SHORT-NAME>
+        </FUNCT-CLASS>
+       <FUNCT-CLASS ID="BV.FLXC1000.FNC.DtcInformation">
+          <SHORT-NAME>DtcInformation</SHORT-NAME>
+        </FUNCT-CLASS>
+     </FUNCT-CLASSS>
+     <DIAG-DATA-DICTIONARY-SPEC>
+       <DATA-OBJECT-PROPS>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.IDENTICAL_UINT_8">
+          <SHORT-NAME>IDENTICAL_UINT_8</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>8</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UINT32" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.IDENTICAL_UINT_16">
+          <SHORT-NAME>IDENTICAL_UINT_16</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>16</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UINT32" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.IDENTICAL_UINT_32">
+          <SHORT-NAME>IDENTICAL_UINT_32</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>32</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UINT32" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.IDENTICAL_STR_END_OF_PDU">
+          <SHORT-NAME>IDENTICAL_STR_END_OF_PDU</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_ASCIISTRING" BASE-TYPE-ENCODING="ISO-8859-1" TERMINATION="END-OF-PDU" xsi:type="MIN-MAX-LENGTH-TYPE">
+           <MIN-LENGTH>1</MIN-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UNICODE2STRING" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.EcuSessionType">
+          <SHORT-NAME>EcuSessionType</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>TEXTTABLE</CATEGORY>
+           <COMPU-INTERNAL-TO-PHYS>
+            <COMPU-SCALES>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>1</LOWER-LIMIT>  
+               <UPPER-LIMIT>1</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>Default</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>2</LOWER-LIMIT>  
+               <UPPER-LIMIT>2</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>Programming</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>3</LOWER-LIMIT>  
+               <UPPER-LIMIT>3</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>Extended</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>68</LOWER-LIMIT>  
+               <UPPER-LIMIT>68</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>Custom</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+            </COMPU-SCALES>
+           </COMPU-INTERNAL-TO-PHYS>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>8</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UNICODE2STRING" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.VIN_17Byte">
+          <SHORT-NAME>VIN_17Byte</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_ASCIISTRING" BASE-TYPE-ENCODING="ISO-8859-1" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>136</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UNICODE2STRING" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.IDENTICAL_UINT_24">
+          <SHORT-NAME>IDENTICAL_UINT_24</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>24</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UINT32" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.MemoryAddressArray">
+          <SHORT-NAME>MemoryAddressArray</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_BYTEFIELD" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>32</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.MemorySizeArray">
+          <SHORT-NAME>MemorySizeArray</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_BYTEFIELD" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>32</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.TransferData_Data">
+          <SHORT-NAME>TransferData</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_BYTEFIELD" TERMINATION="END-OF-PDU" xsi:type="MIN-MAX-LENGTH-TYPE">
+           <MAX-LENGTH>4000000</MAX-LENGTH>
+           <MIN-LENGTH>0</MIN-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.DTC_24Bit">
+          <SHORT-NAME>DTC_24Bit</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>24</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UINT32" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.DTC_SnapshotData">
+          <SHORT-NAME>DTC_SnapshotData</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_BYTEFIELD" TERMINATION="END-OF-PDU" xsi:type="MIN-MAX-LENGTH-TYPE">
+           <MAX-LENGTH>4000000</MAX-LENGTH>
+           <MIN-LENGTH>0</MIN-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.DTC_ExtendedData">
+          <SHORT-NAME>DTC_ExtendedData</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_BYTEFIELD" TERMINATION="END-OF-PDU" xsi:type="MIN-MAX-LENGTH-TYPE">
+           <MAX-LENGTH>4000000</MAX-LENGTH>
+           <MIN-LENGTH>0</MIN-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="BV.FLXC1000.DOP.AuthReturnParam">
+          <SHORT-NAME>AuthReturnParam</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>TEXTTABLE</CATEGORY>
+           <COMPU-INTERNAL-TO-PHYS>
+            <COMPU-SCALES>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>0</LOWER-LIMIT>  
+               <UPPER-LIMIT>0</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>Request Accepted</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>1</LOWER-LIMIT>  
+               <UPPER-LIMIT>1</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>General Reject</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>2</LOWER-LIMIT>  
+               <UPPER-LIMIT>2</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>AuthenticationConfiguration APCE</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>3</LOWER-LIMIT>  
+               <UPPER-LIMIT>3</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>AuthenticationConfiguration ACR with asymmetric cryptography</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>4</LOWER-LIMIT>  
+               <UPPER-LIMIT>4</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>AuthenticationConfiguration ACR with symmetric cryptography</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>16</LOWER-LIMIT>  
+               <UPPER-LIMIT>16</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>DeAuthentication successful</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>17</LOWER-LIMIT>  
+               <UPPER-LIMIT>17</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>CertificateVerified, OwnershipVerificationNecessary</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>18</LOWER-LIMIT>  
+               <UPPER-LIMIT>18</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>OwnershipVerified, AuthenticationComplete</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+              <COMPU-SCALE>    
+               <LOWER-LIMIT>19</LOWER-LIMIT>  
+               <UPPER-LIMIT>19</UPPER-LIMIT>
+               <COMPU-CONST>
+                 <VT>CertificateVerified</VT>
+               </COMPU-CONST>
+             </COMPU-SCALE>
+            </COMPU-SCALES>
+           </COMPU-INTERNAL-TO-PHYS>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>8</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_UNICODE2STRING" />
+         </DATA-OBJECT-PROP>
+       </DATA-OBJECT-PROPS>  
+     </DIAG-DATA-DICTIONARY-SPEC>
+     <DIAG-COMMS>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.VINDataIdentifier_Read">
+          <SHORT-NAME>VINDataIdentifier_Read</SHORT-NAME>
+         <LONG-NAME>Vehicle Identification Number</LONG-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Ident" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_VINDataIdentifier_Read"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_VINDataIdentifier_Read" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.VINDataIdentifier">
+          <SHORT-NAME>VINDataIdentifier_Write</SHORT-NAME>
+         <LONG-NAME>Vehicle Identification Number</LONG-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Ident" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_VINDataIdentifier_Write"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_VINDataIdentifier_Write" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.ActiveDiagnosticSessionDataIdentifier_Read">
+          <SHORT-NAME>ActiveDiagnosticSessionDataIdentifier_Read</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Ident" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_ActiveDiagnosticSessionDataIdentifier_Read"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_ActiveDiagnosticSessionDataIdentifier_Read" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.Identification_Read">
+          <SHORT-NAME>Identification_Read</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Ident" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_Identification_Read"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_Identification_Read" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.Default_Start">
+          <SHORT-NAME>Default_Start</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Session" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Default_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Programming_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Extended_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Custom_Default">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ..RQ_Default_Start"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_Default_Start" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.Programming_Start">
+          <SHORT-NAME>Programming_Start</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Session" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Default_Programming">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Programming_Programming">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Extended_Programming">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ..RQ_Programming_Start"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_Programming_Start" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.Extended_Start">
+          <SHORT-NAME>Extended_Start</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Session" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Default_Extended">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Programming_Extended">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Extended_Extended">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ..RQ_Extended_Start"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_Extended_Start" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.Custom_Start">
+          <SHORT-NAME>Custom_Start</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Session" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Default_Custom">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Custom_Custom">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ..RQ_Custom_Start"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_Custom_Start" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.HardReset">
+          <SHORT-NAME>HardReset</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.EcuReset" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Default_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Programming_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Extended_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Custom_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Locked">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Level_3_Locked">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Level_5_Locked">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Level_7_Locked">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_HardReset"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_HardReset" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.SoftReset">
+          <SHORT-NAME>SoftReset</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.EcuReset" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Default_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Programming_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Extended_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.Session.STT.Custom_Default">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Locked">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Level_3_Locked">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Level_5_Locked">
+          </STATE-TRANSITION-REF>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Level_7_Locked">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_SoftReset"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_SoftReset" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.RequestDownload" SEMANTIC="DATA">
+          <SHORT-NAME>RequestDownload</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.StandardDataTransfer" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_RequestDownload"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_RequestDownload" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.TransferData">
+          <SHORT-NAME>TransferData</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.StandardDataTransfer" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_TransferData"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_TransferData" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.TransferExit">
+          <SHORT-NAME>TransferExit</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.StandardDataTransfer" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_TransferExit"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_TransferExit" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.ReadDTCInformation_DTCByStatusMask">
+          <SHORT-NAME>ReadDTCInformation_DTCByStatusMask</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.DtcInformation" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_ReadDTCInformation_DTCByStatusMask"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_ReadDTCInformation_DTCByStatusMask" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr">
+          <SHORT-NAME>ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.DtcInformation" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.ReadDTCInformation_ReportDTCExtendedDataByDTCNbr">
+          <SHORT-NAME>ReadDTCInformation_ReportDTCExtendedDataByDTCNbr</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.DtcInformation" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_ReadDTCInformation_ReportDTCExtendedDataByDTCNbr"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_ReadDTCInformation_ReportDTCExtendedDataByDTCNbr" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.Authentication_Deauthenticate">
+          <SHORT-NAME>Authentication_Deauthenticate</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Authentication" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_Authentication_Deauthenticate"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_Authentication_Deauthenticate" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="BV.FLXC1000.DC.Authentication_Configuration">
+          <SHORT-NAME>Authentication_Configuration</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.Authentication" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="BV.FLXC1000.RQ.RQ_Authentication_Configuration"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="BV.FLXC1000.PR.PR_Authentication_Configuration" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+     </DIAG-COMMS>
+     <REQUESTS>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_VINDataIdentifier_Read">
+        <SHORT-NAME>RQ_VINDataIdentifier_Read</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>34</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="CODED-CONST">
+          <SHORT-NAME>DID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>61840</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>16</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_VINDataIdentifier_Write">
+        <SHORT-NAME>RQ_VINDataIdentifier_Write</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>46</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="CODED-CONST">
+          <SHORT-NAME>DID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>61840</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>16</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>VIN</SHORT-NAME> 
+          <BYTE-POSITION>3</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.VIN_17Byte"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_ActiveDiagnosticSessionDataIdentifier_Read">
+        <SHORT-NAME>RQ_ActiveDiagnosticSessionDataIdentifier_Read</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>34</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="CODED-CONST">
+          <SHORT-NAME>DID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>61830</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>16</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_Identification_Read">
+        <SHORT-NAME>RQ_Identification_Read</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>34</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="CODED-CONST">
+          <SHORT-NAME>DID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>61696</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>16</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ..RQ_Default_Start">
+        <SHORT-NAME>RQ_Default_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>16</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>1</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ..RQ_Programming_Start">
+        <SHORT-NAME>RQ_Programming_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>16</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>2</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ..RQ_Extended_Start">
+        <SHORT-NAME>RQ_Extended_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>16</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>3</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ..RQ_Custom_Start">
+        <SHORT-NAME>RQ_Custom_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>16</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>68</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_HardReset">
+        <SHORT-NAME>RQ_HardReset</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>17</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>ResetType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>1</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_SoftReset">
+        <SHORT-NAME>RQ_SoftReset</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>17</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>ResetType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>3</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_RequestDownload">
+        <SHORT-NAME>RQ_RequestDownload</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>52</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>DataFormatIdentifier</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>AddressAndLengthFormatIdentifier</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>MemoryAddress</SHORT-NAME> 
+          <BYTE-POSITION>3</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.MemoryAddressArray"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>MemorySize</SHORT-NAME> 
+          <BYTE-POSITION>7</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.MemorySizeArray"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_TransferData">
+        <SHORT-NAME>RQ_TransferData</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>54</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>BlockSequenceCounter</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>TransferRequestParameterRecord</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.TransferData_Data"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_TransferExit">
+        <SHORT-NAME>RQ_TransferExit</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>55</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_ReadDTCInformation_DTCByStatusMask">
+        <SHORT-NAME>RQ_ReadDTCInformation_DTCByStatusMask</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>25</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>2</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="STATUS-MASK" xsi:type="VALUE">
+          <SHORT-NAME>StatusMask</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr">
+        <SHORT-NAME>RQ_ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>25</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>4</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DTC" xsi:type="VALUE">
+          <SHORT-NAME>DTC</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.DTC_24Bit"/>
+         </PARAM>
+         <PARAM  SEMANTIC="RECORD-NUMBER" xsi:type="VALUE">
+          <SHORT-NAME>RecordNumber</SHORT-NAME> 
+          <BYTE-POSITION>5</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_ReadDTCInformation_ReportDTCExtendedDataByDTCNbr">
+        <SHORT-NAME>RQ_ReadDTCInformation_ReportDTCExtendedDataByDTCNbr</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>25</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>6</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DTC" xsi:type="VALUE">
+          <SHORT-NAME>DTC</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.DTC_24Bit"/>
+         </PARAM>
+         <PARAM  SEMANTIC="RECORD-NUMBER" xsi:type="VALUE">
+          <SHORT-NAME>RecordNumber</SHORT-NAME> 
+          <BYTE-POSITION>5</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_Authentication_Deauthenticate">
+        <SHORT-NAME>RQ_Authentication_Deauthenticate</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>41</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>0</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="BV.FLXC1000.RQ.RQ_Authentication_Configuration">
+        <SHORT-NAME>RQ_Authentication_Configuration</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>41</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>8</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+     </REQUESTS>
+     <POS-RESPONSES>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_VINDataIdentifier_Read">
+        <SHORT-NAME>PR_VINDataIdentifier_Read</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>98</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>DID_PR</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>2</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>VIN</SHORT-NAME> 
+          <BYTE-POSITION>3</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.VIN_17Byte"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_VINDataIdentifier_Write">
+        <SHORT-NAME>PR_VINDataIdentifier_Write</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>110</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>DID_PR</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>2</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_ActiveDiagnosticSessionDataIdentifier_Read">
+        <SHORT-NAME>PR_ActiveDiagnosticSessionDataIdentifier_Read</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>98</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>DID_PR</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>2</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>EcuSessionType</SHORT-NAME> 
+          <BYTE-POSITION>3</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.EcuSessionType"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_Identification_Read">
+        <SHORT-NAME>PR_Identification_Read</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>98</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DID" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>DID_PR</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>2</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>Identification</SHORT-NAME> 
+          <BYTE-POSITION>3</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_24"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_Default_Start">
+        <SHORT-NAME>PR_Default_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>80</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_Programming_Start">
+        <SHORT-NAME>PR_Programming_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>80</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_Extended_Start">
+        <SHORT-NAME>PR_Extended_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>80</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_Custom_Start">
+        <SHORT-NAME>PR_Custom_Start</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>80</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SessionType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_HardReset">
+        <SHORT-NAME>PR_HardReset</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>81</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>ResetType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_SoftReset">
+        <SHORT-NAME>PR_SoftReset</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>81</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>ResetType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_RequestDownload">
+        <SHORT-NAME>PR_RequestDownload</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>116</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>LengthFormatIdentifier</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>MaxNumberOfBlockLength</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_32"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_TransferData">
+        <SHORT-NAME>PR_TransferData</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>118</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>BlockSequenceCounter</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>TransferRequestParameterRecord</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.TransferData_Data"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_TransferExit">
+        <SHORT-NAME>PR_TransferData</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>119</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_ReadDTCInformation_DTCByStatusMask">
+        <SHORT-NAME>PR_ReadDTCInformation_DTCByStatusMask</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>89</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>ReportType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="AVAILABILITY-STATUS" xsi:type="VALUE">
+          <SHORT-NAME>DTCStatusAvailabilityMask</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DTC" xsi:type="VALUE">
+          <SHORT-NAME>DTC</SHORT-NAME> 
+          <BYTE-POSITION>3</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.DTC_24Bit"/>
+         </PARAM>
+         <PARAM  SEMANTIC="STATUS" xsi:type="VALUE">
+          <SHORT-NAME>StatusOfDTC</SHORT-NAME> 
+          <BYTE-POSITION>6</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr">
+        <SHORT-NAME>PR_ReadDTCInformation_ReportDTCSnapshotRecordByDTCNbr</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>89</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DTC" xsi:type="VALUE">
+          <SHORT-NAME>DTC</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.DTC_24Bit"/>
+         </PARAM>
+         <PARAM  SEMANTIC="STATUS" xsi:type="VALUE">
+          <SHORT-NAME>StatusMask</SHORT-NAME> 
+          <BYTE-POSITION>4</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>SnapshotRecord</SHORT-NAME> 
+          <BYTE-POSITION>5</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.DTC_SnapshotData"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_ReadDTCInformation_ReportDTCExtendedDataByDTCNbr">
+        <SHORT-NAME>PR_ReadDTCInformation_ReportDTCExtendedDataByDTCNbr</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>89</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DTC" xsi:type="VALUE">
+          <SHORT-NAME>DTC</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.DTC_24Bit"/>
+         </PARAM>
+         <PARAM  SEMANTIC="STATUS" xsi:type="VALUE">
+          <SHORT-NAME>StatusMask</SHORT-NAME> 
+          <BYTE-POSITION>4</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.IDENTICAL_UINT_8"/>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>ExtendedData</SHORT-NAME> 
+          <BYTE-POSITION>5</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.DTC_ExtendedData"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_Authentication_Deauthenticate">
+        <SHORT-NAME>PR_Authentication_Deauthenticate</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>105</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="BV.FLXC1000.PR.PR_Authentication_Configuration">
+        <SHORT-NAME>PR_Authentication_Configuration</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>105</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>AuthenticationReturnParameter</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="BV.FLXC1000.DOP.AuthReturnParam"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+     </POS-RESPONSES>
+     <STATE-CHARTS>
+       <STATE-CHART ID="BV.FLXC1000.SC.Session">
+      <SHORT-NAME>Session</SHORT-NAME>
+      <SEMANTIC>SESSION</SEMANTIC>
+      <STATE-TRANSITIONS>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Default_Default">
+        <SHORT-NAME>Default_Default</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Default" />
+        <TARGET-SNREF SHORT-NAME="Default" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Default_Programming">
+        <SHORT-NAME>Default_Programming</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Default" />
+        <TARGET-SNREF SHORT-NAME="Programming" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Default_Extended">
+        <SHORT-NAME>Default_Extended</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Default" />
+        <TARGET-SNREF SHORT-NAME="Extended" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Default_Custom">
+        <SHORT-NAME>Default_Custom</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Default" />
+        <TARGET-SNREF SHORT-NAME="Custom" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Programming_Default">
+        <SHORT-NAME>Programming_Default</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Programming" />
+        <TARGET-SNREF SHORT-NAME="Default" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Programming_Programming">
+        <SHORT-NAME>Programming_Programming</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Programming" />
+        <TARGET-SNREF SHORT-NAME="Programming" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Programming_Extended">
+        <SHORT-NAME>Programming_Extended</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Programming" />
+        <TARGET-SNREF SHORT-NAME="Extended" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Extended_Default">
+        <SHORT-NAME>Extended_Default</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Extended" />
+        <TARGET-SNREF SHORT-NAME="Default" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Extended_Programming">
+        <SHORT-NAME>Extended_Programming</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Extended" />
+        <TARGET-SNREF SHORT-NAME="Programming" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Extended_Extended">
+        <SHORT-NAME>Extended_Extended</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Extended" />
+        <TARGET-SNREF SHORT-NAME="Extended" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Custom_Default">
+        <SHORT-NAME>Custom_Default</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Custom" />
+        <TARGET-SNREF SHORT-NAME="Default" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.Session.STT.Custom_Custom">
+        <SHORT-NAME>Custom_Custom</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Custom" />
+        <TARGET-SNREF SHORT-NAME="Custom" />
+       </STATE-TRANSITION>
+      </STATE-TRANSITIONS>
+      <START-STATE-SNREF SHORT-NAME="Default" />
+      <STATES>
+       <STATE ID="BV.FLXC1000.SC.Session.ST.Default">
+        <SHORT-NAME>Default</SHORT-NAME>
+       </STATE>
+       <STATE ID="BV.FLXC1000.SC.Session.ST.Programming">
+        <SHORT-NAME>Programming</SHORT-NAME>
+       </STATE>
+       <STATE ID="BV.FLXC1000.SC.Session.ST.Extended">
+        <SHORT-NAME>Extended</SHORT-NAME>
+       </STATE>
+       <STATE ID="BV.FLXC1000.SC.Session.ST.Custom">
+        <SHORT-NAME>Custom</SHORT-NAME>
+       </STATE>
+      </STATES>
+     </STATE-CHART>
+       <STATE-CHART ID="BV.FLXC1000.SC.SecurityAccess">
+      <SHORT-NAME>SecurityAccess</SHORT-NAME>
+      <SEMANTIC>SECURITY</SEMANTIC>
+      <STATE-TRANSITIONS>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Locked">
+        <SHORT-NAME>Locked_Locked</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Locked" />
+        <TARGET-SNREF SHORT-NAME="Locked" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Level_3">
+        <SHORT-NAME>Locked_Level_3</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Locked" />
+        <TARGET-SNREF SHORT-NAME="Level_3" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Level_5">
+        <SHORT-NAME>Locked_Level_5</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Locked" />
+        <TARGET-SNREF SHORT-NAME="Level_5" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Level_7">
+        <SHORT-NAME>Locked_Level_7</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Locked" />
+        <TARGET-SNREF SHORT-NAME="Level_7" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.SecurityAccess.STT.Level_3_Locked">
+        <SHORT-NAME>Level_3_Locked</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Level_3" />
+        <TARGET-SNREF SHORT-NAME="Locked" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.SecurityAccess.STT.Level_5_Locked">
+        <SHORT-NAME>Level_5_Locked</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Level_5" />
+        <TARGET-SNREF SHORT-NAME="Locked" />
+       </STATE-TRANSITION>
+       <STATE-TRANSITION ID="BV.FLXC1000.SC.SecurityAccess.STT.Level_7_Locked">
+        <SHORT-NAME>Level_7_Locked</SHORT-NAME>
+        <SOURCE-SNREF SHORT-NAME="Level_7" />
+        <TARGET-SNREF SHORT-NAME="Locked" />
+       </STATE-TRANSITION>
+      </STATE-TRANSITIONS>
+      <START-STATE-SNREF SHORT-NAME="Locked" />
+      <STATES>
+       <STATE ID="BV.FLXC1000.SC.SecurityAccess.ST.Locked">
+        <SHORT-NAME>Locked</SHORT-NAME>
+       </STATE>
+       <STATE ID="BV.FLXC1000.SC.SecurityAccess.ST.Level_3">
+        <SHORT-NAME>Level_3</SHORT-NAME>
+       </STATE>
+       <STATE ID="BV.FLXC1000.SC.SecurityAccess.ST.Level_5">
+        <SHORT-NAME>Level_5</SHORT-NAME>
+       </STATE>
+       <STATE ID="BV.FLXC1000.SC.SecurityAccess.ST.Level_7">
+        <SHORT-NAME>Level_7</SHORT-NAME>
+       </STATE>
+      </STATES>
+     </STATE-CHART>
+     </STATE-CHARTS>
+     <COMPARAM-REFS>
+       <COMPARAM-REF ID-REF="ISO_13400_2.CP_DoIPLogicalGatewayAddress" DOCREF="ISO_13400_2" DOCTYPE="COMPARAM-SUBSET">
+         <SIMPLE-VALUE>4096</SIMPLE-VALUE>
+         
+         <PROTOCOL-SNREF SHORT-NAME="UDS_Ethernet_DoIP"/>
+       </COMPARAM-REF>
+       <COMPARAM-REF ID-REF="ISO_13400_2.CP_DoIPLogicalFunctionalAddress" DOCREF="ISO_13400_2" DOCTYPE="COMPARAM-SUBSET">
+         <SIMPLE-VALUE>65535</SIMPLE-VALUE>
+         
+         <PROTOCOL-SNREF SHORT-NAME="UDS_Ethernet_DoIP"/>
+       </COMPARAM-REF>
+       <COMPARAM-REF ID-REF="ISO_13400_2.CP_UniqueRespIdTable" DOCREF="ISO_13400_2" DOCTYPE="COMPARAM-SUBSET">
+         
+        <COMPLEX-VALUE>
+          <SIMPLE-VALUE>4096</SIMPLE-VALUE>
+          <SIMPLE-VALUE>0</SIMPLE-VALUE>
+          <SIMPLE-VALUE>FLXC1000</SIMPLE-VALUE>
+        </COMPLEX-VALUE>
+         
+         <PROTOCOL-SNREF SHORT-NAME="UDS_Ethernet_DoIP"/>
+       </COMPARAM-REF>
+       <COMPARAM-REF ID-REF="ISO_13400_2.CP_DoIPLogicalGatewayAddress" DOCREF="ISO_13400_2" DOCTYPE="COMPARAM-SUBSET">
+         <SIMPLE-VALUE>4096</SIMPLE-VALUE>
+         
+         <PROTOCOL-SNREF SHORT-NAME="UDS_Ethernet_DoIP_DOBT"/>
+       </COMPARAM-REF>
+       <COMPARAM-REF ID-REF="ISO_13400_2.CP_DoIPLogicalFunctionalAddress" DOCREF="ISO_13400_2" DOCTYPE="COMPARAM-SUBSET">
+         <SIMPLE-VALUE>65535</SIMPLE-VALUE>
+         
+         <PROTOCOL-SNREF SHORT-NAME="UDS_Ethernet_DoIP_DOBT"/>
+       </COMPARAM-REF>
+       <COMPARAM-REF ID-REF="ISO_13400_2.CP_UniqueRespIdTable" DOCREF="ISO_13400_2" DOCTYPE="COMPARAM-SUBSET">
+         
+        <COMPLEX-VALUE>
+          <SIMPLE-VALUE>4096</SIMPLE-VALUE>
+          <SIMPLE-VALUE>0</SIMPLE-VALUE>
+          <SIMPLE-VALUE>FLXC1000</SIMPLE-VALUE>
+        </COMPLEX-VALUE>
+         
+         <PROTOCOL-SNREF SHORT-NAME="UDS_Ethernet_DoIP_DOBT"/>
+       </COMPARAM-REF>
+     </COMPARAM-REFS>
+     <PARENT-REFS><PARENT-REF ID-REF="PROTO.UDS_Ethernet_DoIP" DOCREF="UDS_Ethernet_DoIP" DOCTYPE="CONTAINER"
+                   xsi:type="PROTOCOL-REF">
+       </PARENT-REF><PARENT-REF ID-REF="PROTO.UDS_Ethernet_DoIP_DOBT" DOCREF="UDS_Ethernet_DoIP_DOBT" DOCTYPE="CONTAINER"
+                   xsi:type="PROTOCOL-REF">
+       </PARENT-REF>
+     </PARENT-REFS>
+   </BASE-VARIANT>
+  </BASE-VARIANTS>
+  <ECU-VARIANTS>
+  <ECU-VARIANT ID="EV.FLXC1000.FLXC1000_Boot_Variant">
+     
+     <SHORT-NAME>FLXC1000_Boot_Variant</SHORT-NAME>
+     <DIAG-DATA-DICTIONARY-SPEC>
+       <DATA-OBJECT-PROPS>
+         <DATA-OBJECT-PROP ID="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.SecurityAccess_EndOfPduByteArray">
+          <SHORT-NAME>SecurityAccess_EndOfPduByteArray</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_BYTEFIELD" TERMINATION="END-OF-PDU" xsi:type="MIN-MAX-LENGTH-TYPE">
+           <MAX-LENGTH>255</MAX-LENGTH>
+           <MIN-LENGTH>1</MIN-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" DISPLAY-RADIX="HEX" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.NRC_{short_name}">
+          <SHORT-NAME>NRC_{short_name}</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>8</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.NRC_{short_name}">
+          <SHORT-NAME>NRC_{short_name}</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>8</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+         <DATA-OBJECT-PROP ID="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.NRC_{short_name}">
+          <SHORT-NAME>NRC_{short_name}</SHORT-NAME>
+          <COMPU-METHOD>
+           <CATEGORY>IDENTICAL</CATEGORY>
+          </COMPU-METHOD>
+          <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+           <BIT-LENGTH>8</BIT-LENGTH>
+          </DIAG-CODED-TYPE>
+          <PHYSICAL-TYPE BASE-DATA-TYPE="A_BYTEFIELD" />
+         </DATA-OBJECT-PROP>
+       </DATA-OBJECT-PROPS>  
+     </DIAG-DATA-DICTIONARY-SPEC>
+     <DIAG-COMMS>
+       <DIAG-SERVICE  ID="EV.FLXC1000.FLXC1000_Boot_Variant.DC.RequestSeed_Level_3">
+          <SHORT-NAME>RequestSeed_Level_3</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.SecurityAccess" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_RequestSeed_Level_3"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_3" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="EV.FLXC1000.FLXC1000_Boot_Variant.DC.SendKey_Level_3">
+          <SHORT-NAME>SendKey_Level_3</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.SecurityAccess" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Level_3">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_SendKey_Level_3"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_3" />
+         </POS-RESPONSE-REFS>
+         <NEG-RESPONSE-REFS>
+           <NEG-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.NR.NR_SendKey_Level_3" />
+         </NEG-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="EV.FLXC1000.FLXC1000_Boot_Variant.DC.RequestSeed_Level_5">
+          <SHORT-NAME>RequestSeed_Level_5</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.SecurityAccess" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_RequestSeed_Level_5"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_5" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="EV.FLXC1000.FLXC1000_Boot_Variant.DC.SendKey_Level_5">
+          <SHORT-NAME>SendKey_Level_5</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.SecurityAccess" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Level_5">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_SendKey_Level_5"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_5" />
+         </POS-RESPONSE-REFS>
+         <NEG-RESPONSE-REFS>
+           <NEG-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.NR.NR_SendKey_Level_5" />
+         </NEG-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="EV.FLXC1000.FLXC1000_Boot_Variant.DC.RequestSeed_Level_7">
+          <SHORT-NAME>RequestSeed_Level_7</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.SecurityAccess" />
+         </FUNCT-CLASS-REFS>
+         <REQUEST-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_RequestSeed_Level_7"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_7" />
+         </POS-RESPONSE-REFS>
+       </DIAG-SERVICE>
+       <DIAG-SERVICE  ID="EV.FLXC1000.FLXC1000_Boot_Variant.DC.SendKey_Level_7">
+          <SHORT-NAME>SendKey_Level_7</SHORT-NAME> 
+         <FUNCT-CLASS-REFS>
+          <FUNCT-CLASS-REF ID-REF="BV.FLXC1000.FNC.SecurityAccess" />
+         </FUNCT-CLASS-REFS>
+         <STATE-TRANSITION-REFS>
+          <STATE-TRANSITION-REF ID-REF="BV.FLXC1000.SC.SecurityAccess.STT.Locked_Level_7">
+          </STATE-TRANSITION-REF>
+         </STATE-TRANSITION-REFS>
+         <REQUEST-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_SendKey_Level_7"/>
+         <POS-RESPONSE-REFS>
+           <POS-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_7" />
+         </POS-RESPONSE-REFS>
+         <NEG-RESPONSE-REFS>
+           <NEG-RESPONSE-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.NR.NR_SendKey_Level_7" />
+         </NEG-RESPONSE-REFS>
+       </DIAG-SERVICE>
+     </DIAG-COMMS>
+     <REQUESTS>
+       <REQUEST ID="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_RequestSeed_Level_3">
+        <SHORT-NAME>RQ_RequestSeed_Level_3</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>39</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>3</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_SendKey_Level_3">
+        <SHORT-NAME>RQ_SendKey_Level_3</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>39</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>4</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>SecurityKey</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.SecurityAccess_EndOfPduByteArray"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_RequestSeed_Level_5">
+        <SHORT-NAME>RQ_RequestSeed_Level_5</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>39</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>5</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_SendKey_Level_5">
+        <SHORT-NAME>RQ_SendKey_Level_5</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>39</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>6</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>SecurityKey</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.SecurityAccess_EndOfPduByteArray"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_RequestSeed_Level_7">
+        <SHORT-NAME>RQ_RequestSeed_Level_7</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>39</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>7</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+       <REQUEST ID="EV.FLXC1000.FLXC1000_Boot_Variant.RQ.RQ_SendKey_Level_7">
+        <SHORT-NAME>RQ_SendKey_Level_7</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>39</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SUBFUNCTION" xsi:type="CODED-CONST">
+          <SHORT-NAME>SUBFUNCTION</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <CODED-VALUE>8</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>SecurityKey</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.SecurityAccess_EndOfPduByteArray"/>
+         </PARAM>
+        </PARAMS> 
+       </REQUEST>
+     </REQUESTS>
+     <POS-RESPONSES>
+       <POS-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_3">
+        <SHORT-NAME>PR_RequestSeed_Level_3</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>103</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>SecuritySeed</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.SecurityAccess_EndOfPduByteArray"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_3">
+        <SHORT-NAME>PR_RequestSeed_Level_3</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>103</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_5">
+        <SHORT-NAME>PR_RequestSeed_Level_5</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>103</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>SecuritySeed</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.SecurityAccess_EndOfPduByteArray"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_5">
+        <SHORT-NAME>PR_RequestSeed_Level_5</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>103</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_7">
+        <SHORT-NAME>PR_RequestSeed_Level_7</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_RQ</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>103</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>SecuritySeed</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.SecurityAccess_EndOfPduByteArray"/>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+       <POS-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.PR.PR_RequestSeed_Level_7">
+        <SHORT-NAME>PR_RequestSeed_Level_7</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_PR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>103</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SEMANTIC" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SecurityAccessType</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>1</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+        </PARAMS> 
+       </POS-RESPONSE>
+     </POS-RESPONSES>
+     <NEG-RESPONSES>
+       <NEG-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.NR.NR_SendKey_Level_3">
+        <SHORT-NAME>NR_SendKey_Level_3</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_NR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>127</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SERVICEIDRQ" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SIDRQ_NR</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>0</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>NRC</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.NRC_{short_name}"/>
+         </PARAM>
+        </PARAMS> 
+       </NEG-RESPONSE>
+       <NEG-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.NR.NR_SendKey_Level_5">
+        <SHORT-NAME>NR_SendKey_Level_5</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_NR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>127</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SERVICEIDRQ" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SIDRQ_NR</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>0</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>NRC</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.NRC_{short_name}"/>
+         </PARAM>
+        </PARAMS> 
+       </NEG-RESPONSE>
+       <NEG-RESPONSE ID="EV.FLXC1000.FLXC1000_Boot_Variant.NR.NR_SendKey_Level_7">
+        <SHORT-NAME>NR_SendKey_Level_7</SHORT-NAME>
+        <PARAMS>
+         <PARAM  SEMANTIC="SERVICE-ID" xsi:type="CODED-CONST">
+          <SHORT-NAME>SID_NR</SHORT-NAME> 
+          <BYTE-POSITION>0</BYTE-POSITION>
+          <CODED-VALUE>127</CODED-VALUE>
+          
+           <DIAG-CODED-TYPE BASE-DATA-TYPE="A_UINT32" xsi:type="STANDARD-LENGTH-TYPE">
+            <BIT-LENGTH>8</BIT-LENGTH>
+           </DIAG-CODED-TYPE>
+         </PARAM>
+         <PARAM  SEMANTIC="SERVICEIDRQ" xsi:type="MATCHING-REQUEST-PARAM">
+          <SHORT-NAME>SIDRQ_NR</SHORT-NAME> 
+          <BYTE-POSITION>1</BYTE-POSITION>
+          <REQUEST-BYTE-POS>0</REQUEST-BYTE-POS>
+          <BYTE-LENGTH>1</BYTE-LENGTH>
+         </PARAM>
+         <PARAM  SEMANTIC="DATA" xsi:type="VALUE">
+          <SHORT-NAME>NRC</SHORT-NAME> 
+          <BYTE-POSITION>2</BYTE-POSITION>
+          <DOP-REF ID-REF="EV.FLXC1000.FLXC1000_Boot_Variant.DOP.NRC_{short_name}"/>
+         </PARAM>
+        </PARAMS> 
+       </NEG-RESPONSE>
+     </NEG-RESPONSES>
+     <ECU-VARIANT-PATTERNS><ECU-VARIANT-PATTERN>
+        <MATCHING-PARAMETERS>
+         <MATCHING-PARAMETER>
+           <EXPECTED-VALUE>16711680</EXPECTED-VALUE>
+           <DIAG-COMM-SNREF SHORT-NAME="Identification_Read" />
+           <OUT-PARAM-IF-SNREF SHORT-NAME="Identification" />
+         </MATCHING-PARAMETER>
+        </MATCHING-PARAMETERS>
+       </ECU-VARIANT-PATTERN></ECU-VARIANT-PATTERNS>
+     <PARENT-REFS><PARENT-REF ID-REF="BV.FLXC1000"
+                   xsi:type="BASE-VARIANT-REF">
+       </PARENT-REF>
+     </PARENT-REFS>
+   </ECU-VARIANT>
+  <ECU-VARIANT ID="EV.FLXC1000.FLXC1000_App_0101">
+     
+     <SHORT-NAME>FLXC1000_App_0101</SHORT-NAME>
+     <DIAG-DATA-DICTIONARY-SPEC>  
+     </DIAG-DATA-DICTIONARY-SPEC>
+     <ECU-VARIANT-PATTERNS><ECU-VARIANT-PATTERN>
+        <MATCHING-PARAMETERS>
+         <MATCHING-PARAMETER>
+           <EXPECTED-VALUE>257</EXPECTED-VALUE>
+           <DIAG-COMM-SNREF SHORT-NAME="Identification_Read" />
+           <OUT-PARAM-IF-SNREF SHORT-NAME="Identification" />
+         </MATCHING-PARAMETER>
+        </MATCHING-PARAMETERS>
+       </ECU-VARIANT-PATTERN></ECU-VARIANT-PATTERNS>
+     <PARENT-REFS><PARENT-REF ID-REF="BV.FLXC1000"
+                   xsi:type="BASE-VARIANT-REF">
+       </PARENT-REF>
+     </PARENT-REFS>
+   </ECU-VARIANT>
+  </ECU-VARIANTS>
+ </DIAG-LAYER-CONTAINER>
+</ODX>

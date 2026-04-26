@@ -1,0 +1,80 @@
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+
+[package]
+name = "integration-tests"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+description = "Integration tests for the whole Classic Diagnostic Adapter (CDA) system"
+homepage.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[dependencies]
+# internal dependencies
+cda-interfaces = { workspace = true }
+cda-core = { workspace = true }
+cda-database = { workspace = true }
+cda-sovd = { workspace = true }
+sovd-interfaces = { workspace = true }
+cda-tracing = { workspace = true }
+cda-plugin-security = { workspace = true }
+cda-comm-doip = { workspace = true }
+opensovd_cda_lib = { workspace = true }
+
+# External dependencies
+# tokio
+tokio = { workspace = true, features = ["rt", "sync", "io-util", "time"] }
+# serde
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+serde_qs = { workspace = true, features = ["axum"] }
+# http
+aide = { workspace = true, features = ["axum"] }
+axum = { workspace = true }
+reqwest = { workspace = true }
+http = { workspace = true }
+mime = { workspace = true }
+schemars = { workspace = true }
+url = { workspace = true }
+# logging
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true, features = [
+  "ansi",
+  "chrono",
+  "env-filter",
+  "fmt",
+  "json",
+  "parking_lot",
+  "std",
+] }
+# error
+thiserror = { workspace = true }
+# time
+chrono = { workspace = true }
+# future
+futures = { workspace = true }
+# libc
+libc = { workspace = true }
+
+
+[features]
+default = []
+integration-tests = []
+
+# Integration tests are only compiled when the feature is enabled.
+[[test]]
+name = "integration_tests"
+path = "tests/integration_tests.rs"
+required-features = ["integration-tests"]

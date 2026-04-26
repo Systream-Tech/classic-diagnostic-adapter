@@ -1,0 +1,87 @@
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+
+[package]
+name = "opensovd-cda"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+description = "Eclipse OpenSOVD CDA - A modern open source Classic Diagnostic Adapter written in Rust"
+homepage.workspace = true
+license.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "opensovd-cda"
+path = "src/main.rs"
+
+[lib]
+name = "opensovd_cda_lib"
+path = "src/lib.rs"
+
+[dependencies]
+cda-core = { workspace = true }
+cda-comm-doip = { workspace = true }
+cda-comm-uds = { workspace = true }
+cda-database = { workspace = true }
+cda-interfaces = { workspace = true }
+cda-sovd = { workspace = true }
+cda-tracing = { workspace = true }
+cda-plugin-security = { workspace = true }
+# args
+clap = { workspace = true, features = ["derive"] }
+# config
+figment = { workspace = true, features = ["env", "toml"] }
+futures = { workspace = true }
+# allocator
+mimalloc = { git = "https://github.com/theswiftfox/mimalloc.git", rev = "afbaaa5" }
+serde = { workspace = true, features = ["derive"] }
+tokio = { workspace = true, features = [
+  "rt-multi-thread",
+  "macros",
+  "io-util",
+  "time",
+  "signal",
+] }
+# logging & tracing
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tracing-core = { workspace = true }
+tracing-appender = { workspace = true }
+tracing-subscriber = { workspace = true, features = [
+  "ansi",
+  "chrono",
+  "env-filter",
+  "fmt",
+  "json",
+  "parking_lot",
+  "std",
+] }
+strip-ansi-escapes = { workspace = true } # Strip ANSI escape codes from strings, used for file logging
+nu-ansi-term = { workspace = true } # ANSI terminal support for terminal log output
+
+[dev-dependencies]
+chrono = { workspace = true }
+http = { workspace = true }
+mime = { workspace = true }
+reqwest = { workspace = true }
+serde_json = { workspace = true }
+
+[features]
+default = []
+tokio-tracing = ["cda-interfaces/tokio-tracing", "cda-tracing/tokio-tracing"]
+openssl-vendored = [
+  "cda-comm-doip/openssl-vendored",
+  "cda-comm-uds/openssl-vendored",
+]
+dlt-tracing = ["cda-tracing/dlt-tracing"]

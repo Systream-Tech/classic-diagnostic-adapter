@@ -1,0 +1,96 @@
+# SPDX-License-Identifier: Apache-2.0
+# SPDX-FileCopyrightText: 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+
+name: Generate documentation & Requirements Tracing
+
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  build_documentation_and_trace_requirements:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build Sphinx builder docker image for generating documentation
+        uses: docker/build-push-action@v5
+        with:
+          context: ./docs
+          file: ./docs/Dockerfile
+          push: false
+          tags: ghcr.io/${{ github.repository }}/sphinxdoc:latest
+          load: true
+          cache-from: |
+            type=gha,scope=sphinx-doc-${{ github.ref_name }}
+            type=gha,scope=sphinx-doc-main
+          cache-to: |
+            type=gha,scope=sphinx-doc-${{ github.ref_name }}
+      - name: Generate documentation & verify traceability
+        run: |
+          docker run --rm \
+            -e _JAVA_OPTIONS="-Djava.io.tmpdir=/tmp -Duser.home=/tmp" \
+            -v ${{ github.workspace }}:/project \
+            -v ${{ github.workspace }}/docs:/docs \
+            -u $(id -u):$(id -g) \
+            ghcr.io/${{ github.repository }}/sphinxdoc:latest \
+            bash -c "sphinx-build -W -b html /docs /docs/_build/html"
+      - name: Upload documentation (html)
+        uses: actions/upload-artifact@v4
+        id: upload-docs-html
+        with:
+          if-no-files-found: 'error'
+          name: 'cda-docs'
+          retention-days: 7
+          path: |
+            docs/_build/html/
+  build_rustdoc_security_plugin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: false
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.88.0
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+      - name: Clean docs folder
+        run: cargo clean --doc
+      - name: Build docs
+        run: cargo doc --no-deps -p cda-plugin-security
+      - name: Remove lock file
+        run: rm target/doc/.lock
+      - name: Add redirect
+        run: echo '<meta http-equiv="refresh" content="0;url=cda_plugin_security/index.html">' > target/doc/index.html
+      - name: Upload documentation (rustdoc)
+        uses: actions/upload-artifact@v4
+        id: upload-rustdoc
+        with:
+          if-no-files-found: 'error'
+          name: 'rustdoc'
+          retention-days: 7
+          path: |
+            target/doc/

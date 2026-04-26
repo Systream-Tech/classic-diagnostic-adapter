@@ -1,0 +1,93 @@
+# Copyright (c) 2025 The Contributors to Eclipse OpenSOVD (see CONTRIBUTORS)
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+
+[package]
+name = "cda-sovd"
+version = "0.1.0"
+edition.workspace = true
+publish = false
+description = "SOVD webserver used in CDA"
+homepage.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+# internal dependencies
+cda-interfaces = { workspace = true }
+cda-plugin-security = { workspace = true }
+sovd-interfaces = { workspace = true }
+cda-comm-doip = { workspace = true }
+
+tokio = { workspace = true, features = ["net"] }
+futures = { workspace = true }                   # external
+
+async-trait = { workspace = true }
+
+aide = { workspace = true, features = [
+  "axum",
+  "swagger",
+  "http",
+  "axum-extra",
+  "axum-json",
+  "axum-matched-path",
+  "axum-original-uri",
+  "axum-query",
+  "axum-extra-headers",
+  "axum-extra-with-rejection",
+  "macros",
+  "serde_qs",
+] } # openapi generation
+schemars = { workspace = true }
+
+# web server
+axum = { workspace = true, features = [
+  "http1",
+  "json",
+  "tokio",
+  "query",
+  "matched-path",
+  "original-uri",
+] }
+axum-extra = { workspace = true, features = ["typed-header", "with-rejection"] }
+chrono = { workspace = true }
+http = { workspace = true }
+indexmap = { workspace = true }
+jsonwebtoken = { workspace = true }
+mime = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+serde_json = { workspace = true }
+serde_qs = { workspace = true, features = ["axum"] }
+regex = { workspace = true }
+# v4 - Version 4 UUIDs with random data.
+uuid = { workspace = true, features = ["v4"] }
+thiserror = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true, features = [
+  "cors",
+  "fs",
+  "normalize-path",
+  "timeout",
+  "trace",
+] }
+
+# logging
+tracing = { workspace = true }
+percent-encoding = { workspace = true }
+
+[features]
+default = []
+auth = []
+dlt-tracing = ["cda-interfaces/dlt-tracing"]
