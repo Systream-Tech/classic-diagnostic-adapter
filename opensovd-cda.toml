@@ -15,11 +15,11 @@ disable_token_validation = true
 #expected_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoyNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 
 [database]
-databases_path = "/home/systream/Downloads/New_allfiles/New/mdd"
+databases_path = "/home/systream/Downloads/mdd"
 
 [doip]
-tester_address = "172.42.0.1"
-tester_subnet = "255.255.0.0"
+tester_address = "0.0.0.0"
+tester_subnet = "0.0.0.0"
 
 [logging.otel]
 enabled = false

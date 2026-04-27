@@ -197,7 +197,27 @@ impl<S: SecurityPlugin> cda_interfaces::EcuManager for EcuManager<S> {
             self.load()?;
         }
 
+        // Workaround for ECUs whose bootloader does not answer the variant-detection
+        // service (e.g. 0x22 0xF1 0x00). Set env var `CDA_VARIANT_FALLBACK=base` to
+        // make CDA fall back to the base variant and treat the ECU as Online instead
+        // of Disconnected/NoVariantDetected. This unblocks subsequent UDS flows
+        // (e.g. DiagnosticSessionControl 10 02) that the ECU *can* answer.
+        let fallback_to_base = std::env::var("CDA_VARIANT_FALLBACK")
+            .map(|v| v.eq_ignore_ascii_case("base"))
+            .unwrap_or(false);
+
         if service_responses.is_empty() {
+            if fallback_to_base {
+                if let Some(()) = self.try_apply_base_variant_fallback().await {
+                    return Ok(());
+                }
+                tracing::warn!(
+                    ecu_name = %self.ecu_name,
+                    "CDA_VARIANT_FALLBACK=base set but no base variant found in DB; \
+                     falling through to default offline handling"
+                );
+            }
+
             let state = if matches!(
                 self.variant.state,
                 EcuState::Online
@@ -265,6 +285,18 @@ impl<S: SecurityPlugin> cda_interfaces::EcuManager for EcuManager<S> {
                 Ok(())
             }
             Err(e) => {
+                if fallback_to_base {
+                    if let Some(()) = self.try_apply_base_variant_fallback().await {
+                        tracing::warn!(
+                            ecu_name = %self.ecu_name,
+                            error = %e,
+                            "Variant detection failed; CDA_VARIANT_FALLBACK=base \
+                             applied — using base variant + Online"
+                        );
+                        return Ok(());
+                    }
+                }
+
                 self.variant = EcuVariant {
                     name: None,
                     is_base_variant: false,
@@ -400,6 +432,37 @@ impl<S: SecurityPlugin> cda_interfaces::EcuManager for EcuManager<S> {
             return Err(DiagServiceError::BadPayload(
                 "Expected at least 1 byte".to_owned(),
             ));
+        }
+
+        // CDA_RAW_UDS_ONLY=1 turns CDA's genericservice endpoint into a pure
+        // raw-UDS pass-through: skip the MDD service lookup entirely and just
+        // ship the bytes to the ECU. This is needed for bootloaders whose
+        // service set (e.g. SecurityAccess 0x27, RoutineControl 0x31, RequestDownload 0x34,
+        // TransferData 0x36, ...) is not described in the loaded variant's
+        // MDD — without this the lookup returns NotFound and CDA replies with
+        // an HTTP error before the request ever reaches the wire.
+        //
+        // We deliberately do NOT update session/security state machines here;
+        // when the host is acting as a raw pipe it is the diagnostic client's
+        // job to track its own UDS state.
+        if std::env::var("CDA_RAW_UDS_ONLY")
+            .ok()
+            .as_deref()
+            .is_some_and(|v| matches!(v, "1" | "true" | "TRUE" | "yes" | "on"))
+        {
+            tracing::debug!(
+                ecu_name = %self.ecu_name,
+                first_byte = format!("{:#04x}", rawdata[0]),
+                len = rawdata.len(),
+                "CDA_RAW_UDS_ONLY=1 — genericservice raw pass-through (no MDD lookup)"
+            );
+            return Ok(ServicePayload {
+                data: rawdata,
+                new_session: None,
+                new_security: None,
+                source_address: self.tester_address,
+                target_address: self.logical_address,
+            });
         }
 
         let Some(variant) = self.variant() else {
@@ -1377,6 +1440,51 @@ impl<S: SecurityPlugin> cda_interfaces::DoipComParamProvider for EcuManager<S> {
 }
 
 impl<S: SecurityPlugin> EcuManager<S> {
+    /// Apply the base variant as the active variant and mark the ECU `Online`.
+    /// Returns `Some(())` if a base variant exists in the database; `None` otherwise.
+    ///
+    /// Used as a soft fallback when variant detection cannot reach the ECU
+    /// (no UDS response to e.g. 0x22 0xF1 0x00) but the bus is otherwise healthy
+    /// for the actual flash sequence (10 02, 27 01, 34/36/37, ...). Activated by
+    /// `CDA_VARIANT_FALLBACK=base`.
+    async fn try_apply_base_variant_fallback(&mut self) -> Option<()> {
+        let base = self.diag_database.base_variant().ok()?;
+        let variant_name = (*base)
+            .diag_layer()
+            .and_then(|d| d.short_name())
+            .unwrap_or("BaseVariant")
+            .to_owned();
+
+        let variant_index = self.diag_database.ecu_data().ok().and_then(|ecu_data| {
+            ecu_data
+                .variants()
+                .and_then(|variants| variants.iter().position(|v| v.is_base_variant()))
+        });
+
+        if self.variant_index != variant_index {
+            self.variant_index = variant_index;
+            self.db_cache.reset().await;
+        }
+
+        self.variant = EcuVariant {
+            name: Some(variant_name),
+            is_base_variant: true,
+            state: EcuState::Online,
+            logical_address: self.logical_address,
+        };
+
+        if let (Ok(sec), Ok(ses)) = (
+            self.default_state(semantics::SECURITY),
+            self.default_state(semantics::SESSION),
+        ) {
+            let mut access = self.access_control.lock();
+            access.security = Some(sec);
+            access.session = Some(ses);
+        }
+
+        Some(())
+    }
+
     /// Load diagnostic database for given path
     ///
     /// The created `DiagServiceManager` stores the loaded database as well as some

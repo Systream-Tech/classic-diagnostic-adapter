@@ -1455,6 +1455,40 @@ impl<S: EcuGateway, R: DiagServiceResponse, T: EcuManager<Response = R>> UdsEcu
     async fn detect_variant(&self, ecu_name: &str) -> Result<(), DiagServiceError> {
         let ecu = self.ecu_manager(ecu_name)?;
 
+        // CDA_RAW_UDS_ONLY=1 disables all automatic background UDS traffic
+        // (variant detection 22 F1 00 + tester present 3E 80). Combined with
+        // CDA_VARIANT_FALLBACK=base this lets the bootloader receive ONLY the
+        // genericservice requests the diagnostic client actually issues
+        // (typically 10 02 first). Without this, every VAM (~every 2 s) would
+        // queue a 22 F1 00 probe that bootloaders without UDS routine support
+        // reject with NRC 0x31, polluting the bus and wasting CDA timeouts.
+        if std::env::var("CDA_RAW_UDS_ONLY")
+            .ok()
+            .as_deref()
+            .is_some_and(|v| matches!(v, "1" | "true" | "TRUE" | "yes" | "on"))
+        {
+            if !ecu.read().await.is_loaded() {
+                ecu.write().await.load().map_err(|e| {
+                    DiagServiceError::ResourceError(format!("Failed to load ECU data: {e:?}"))
+                })?;
+            }
+            tracing::info!(
+                ecu_name = %ecu_name,
+                "CDA_RAW_UDS_ONLY=1 — skipping variant detection UDS calls; \
+                 marking ECU Online via base-variant fallback"
+            );
+            return ecu
+                .write()
+                .await
+                .detect_variant::<R>(HashMap::new())
+                .await
+                .map_err(|e| {
+                    DiagServiceError::VariantDetectionError(format!(
+                        "Failed to apply base-variant fallback: {e:?}"
+                    ))
+                });
+        }
+
         let requests = ecu
             .read()
             .await
@@ -1771,6 +1805,23 @@ impl<S: EcuGateway, R: DiagServiceResponse, T: EcuManager<Response = R>> UdsEcu
         fields(dlt_context = dlt_ctx!("UDS"))
     )]
     async fn start_tester_present(&self, type_: TesterPresentType) -> Result<(), DiagServiceError> {
+        // CDA_RAW_UDS_ONLY=1 disables auto tester-present keep-alives. The
+        // SOVD lock acquisition path normally starts a 3E 80 keep-alive task
+        // for the locked ECU; for bootloaders that don't implement
+        // TesterPresent (or where the user wants ONLY 10 02 + flash UDS to go
+        // out) this is unwanted background traffic.
+        if std::env::var("CDA_RAW_UDS_ONLY")
+            .ok()
+            .as_deref()
+            .is_some_and(|v| matches!(v, "1" | "true" | "TRUE" | "yes" | "on"))
+        {
+            tracing::info!(
+                tester_present_type = ?type_,
+                "CDA_RAW_UDS_ONLY=1 — skipping start_tester_present (no 3E 80 keep-alive)"
+            );
+            return Ok(());
+        }
+
         match type_ {
             TesterPresentType::Ecu(ref ecu_name) => {
                 let ecu = ecu_name.to_owned();
@@ -1810,6 +1861,17 @@ impl<S: EcuGateway, R: DiagServiceResponse, T: EcuManager<Response = R>> UdsEcu
         fields(dlt_context = dlt_ctx!("UDS"))
     )]
     async fn stop_tester_present(&self, type_: TesterPresentType) -> Result<(), DiagServiceError> {
+        // Mirror of start_tester_present: when CDA_RAW_UDS_ONLY=1 no keep-alive
+        // task was ever registered, so the lock-cleanup callback would error
+        // out trying to stop a non-existent one. Just return Ok.
+        if std::env::var("CDA_RAW_UDS_ONLY")
+            .ok()
+            .as_deref()
+            .is_some_and(|v| matches!(v, "1" | "true" | "TRUE" | "yes" | "on"))
+        {
+            return Ok(());
+        }
+
         match type_ {
             TesterPresentType::Ecu(ref ecu_name) => {
                 let ecu = ecu_name.to_owned();
