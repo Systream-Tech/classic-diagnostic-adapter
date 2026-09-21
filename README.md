@@ -48,8 +48,15 @@ The minimum required version of the toolchain is [Rust 1.88.0](https://blog.rust
 
 ### build the executable
 
+Default
 ```shell
 cargo build --release
+```
+## RUN
+
+For our use case
+```shell
+ RUST_LOG=info CDA_VARIANT_FALLBACK=base CDA_RAW_UDS_ONLY=1 cargo run --release -- --databases-path <mdd-file-path>
 ```
 
 ## developing
